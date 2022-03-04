@@ -18,11 +18,9 @@ public class ArrayStorage {
     }
 
     Resume get(String uuid) {
-        for (Resume resume : getAll()) {
-            if (resume != null) {
-                if (resume.uuid == uuid) {
-                    return resume;
-                }
+        for (int i = 0; i < size; i++) {
+            if (storage[i].uuid == uuid) {
+                return storage[i];
             }
         }
         return null;
