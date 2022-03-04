@@ -3,35 +3,37 @@
  */
 public class ArrayStorage {
     Resume[] storage = new Resume[10000];
+    private int size = 0;
 
     void clear() {
-        for (Resume resume : storage) {
-            resume = null;
+        for (int i = 0; i < size; i++) {
+            storage[i] = null;
         }
+        size = 0;
     }
 
     void save(Resume r) {
-        for (Resume resume : storage) {
-            if (resume.uuid == null) {
-                resume = r;
-                break;
-            }
-        }
+        storage[size] = r;
+        size++;
     }
 
     Resume get(String uuid) {
         for (Resume resume : getAll()) {
-            if (resume.uuid == uuid) {
-                return resume;
+            if (resume != null) {
+                if (resume.uuid == uuid) {
+                    return resume;
+                }
             }
         }
         return null;
     }
 
     void delete(String uuid) {
-        for (Resume resume : storage) {
-            if (resume.uuid == uuid) {
-                resume = null;
+        for (int i = 0; i < size; i++) {
+            if (storage[i].uuid == uuid) {
+                storage[i] = storage[size - 1];
+                storage[size - 1] = null;
+                size--;
                 break;
             }
         }
@@ -47,14 +49,6 @@ public class ArrayStorage {
     }
 
     int size() {
-        int size = 0;
-        for (Resume resume : storage) {
-            if (resume != null) {
-                size++;
-            } else {
-                break;
-            }
-        }
         return size;
     }
 }
