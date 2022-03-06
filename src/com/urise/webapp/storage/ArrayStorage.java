@@ -8,98 +8,85 @@ import java.util.Arrays;
  * Array based storage for Resumes
  */
 public class ArrayStorage {
-    Resume[] storage = new Resume[10000];
+    private Resume[] storage = new Resume[10000];
     private int size = 0;
 
-    void clear() {
+    public void clear() {
         Arrays.fill(storage, 0, size, null);
         size = 0;
     }
 
-    void save(Resume r) {
-        if (absenceResume(r.uuid) && notOverflow()) {
+    public void save(Resume r) {
+        if (!availabilityResume(r.getUuid()) && notOverflow()) {
             storage[size] = r;
             size++;
         }
     }
 
-    Resume get(String uuid) {
+    public Resume get(String uuid) {
         if (availabilityResume(uuid)) {
-            for (int i = 0; i < size; i++) {
-                if (storage[i].uuid == uuid) {
-                    return storage[i];
-                }
-            }
+            return storage[indexSearch(uuid)];
         }
         return null;
     }
 
-    void delete(String uuid) {
+    public void delete(String uuid) {
         if (availabilityResume(uuid)) {
-            for (int i = 0; i < size; i++) {
-                if (storage[i].uuid == uuid) {
-                    storage[i] = storage[size - 1];
-                    storage[size - 1] = null;
-                    size--;
-                    break;
-                }
-            }
+            storage[indexSearch(uuid)] = storage[size - 1];
+            storage[size - 1] = null;
+            size--;
         }
     }
 
     /**
      * @return array, contains only Resumes in storage (without null)
      */
-    Resume[] getAll() {
+    public Resume[] getAll() {
         Resume[] copyStorage = new Resume[storage.length];
         System.arraycopy(storage, 0, copyStorage, 0, storage.length);
         return copyStorage;
     }
 
-    int size() {
+    public int size() {
         return size;
     }
 
-    void update(Resume resume) {
-        if (availabilityResume(resume.uuid)) {
-            for (int i = 0; i < size; i++) {
-                if (storage[i].uuid == resume.uuid) {
-                    storage[i] = resume;
-                }
-            }
+    public void update(Resume resume) {
+        if (availabilityResume(resume.getUuid())) {
+            storage[indexSearch(resume.getUuid())] = resume;
         }
     }
 
-    boolean availabilityResume(String uuid) {
+    private boolean availabilityResume(String uuid) {
         boolean available = false;
         for (int i = 0; i < size; i++) {
-            if (storage[i].uuid == uuid) {
+            if (storage[i].getUuid() == uuid) {
+                System.out.println("Резюме " + uuid + " найдено в списке имеющихся");
                 available = true;
             }
         }
         if (available == false) {
-            System.out.println("Резюме " + uuid + " не найдено");
+            System.out.println("Резюме " + uuid + " ранее не добавлялось");
         }
         return available;
     }
 
-    boolean absenceResume(String uuid) {
-        boolean absence = true;
-        for (int i = 0; i < size; i++) {
-            if (storage[i].uuid == uuid) {
-                absence = false;
-                System.out.println("Резюме " + uuid + " уже имеется");
-            }
-        }
-        return absence;
-    }
-
-    boolean notOverflow() {
+    private boolean notOverflow() {
         if (size == storage.length) {
             System.out.println("Место хранения переполнено");
             return true;
         } else {
             return false;
         }
+    }
+
+    private int indexSearch(String uuid) {
+        int index = 0;
+        for (int i = 0; i < size; i++) {
+            if (storage[i].getUuid() == uuid) {
+                index = i;
+            }
+        }
+        return index;
     }
 }
