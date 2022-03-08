@@ -10,6 +10,7 @@ import java.util.Arrays;
 public class ArrayStorage {
     private Resume[] storage = new Resume[10000];
     private int size = 0;
+    private int index = 0;
 
     public void clear() {
         Arrays.fill(storage, 0, size, null);
@@ -25,14 +26,14 @@ public class ArrayStorage {
 
     public Resume get(String uuid) {
         if (availabilityResume(uuid)) {
-            return storage[indexSearch(uuid)];
+            return storage[index];
         }
         return null;
     }
 
     public void delete(String uuid) {
         if (availabilityResume(uuid)) {
-            storage[indexSearch(uuid)] = storage[size - 1];
+            storage[index] = storage[size - 1];
             storage[size - 1] = null;
             size--;
         }
@@ -53,14 +54,14 @@ public class ArrayStorage {
 
     public void update(Resume resume) {
         if (availabilityResume(resume.getUuid())) {
-            storage[indexSearch(resume.getUuid())] = resume;
+            storage[index] = resume;
         }
     }
 
     private boolean availabilityResume(String uuid) {
         boolean available = false;
-        for (int i = 0; i < size; i++) {
-            if (storage[i].getUuid() == uuid) {
+        for ( index = 0; index < size; index++) {
+            if (storage[index].getUuid() == uuid) {
                 System.out.println("Резюме " + uuid + " найдено в списке имеющихся");
                 available = true;
             }
@@ -78,15 +79,5 @@ public class ArrayStorage {
         } else {
             return false;
         }
-    }
-
-    private int indexSearch(String uuid) {
-        int index = 0;
-        for (int i = 0; i < size; i++) {
-            if (storage[i].getUuid() == uuid) {
-                index = i;
-            }
-        }
-        return index;
     }
 }
