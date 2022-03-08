@@ -10,7 +10,6 @@ import java.util.Arrays;
 public class ArrayStorage {
     private Resume[] storage = new Resume[10000];
     private int size = 0;
-    private int index;
 
     public void clear() {
         Arrays.fill(storage, 0, size, null);
@@ -18,22 +17,30 @@ public class ArrayStorage {
     }
 
     public void save(Resume r) {
-        if (!availabilityResume(r.getUuid()) && notOverflow()) {
+        if (findIndex(r.getUuid()) != -1 && checkCapacity()) {
             storage[size] = r;
             size++;
         }
     }
 
+    private boolean checkCapacity() {
+        if (size == storage.length) {
+            System.out.println("Место хранения переполнено");
+            return true;
+        }
+        return false;
+    }
+
     public Resume get(String uuid) {
-        if (availabilityResume(uuid)) {
-            return storage[index];
+        if (findIndex(uuid) != -1) {
+            return storage[findIndex(uuid)];
         }
         return null;
     }
 
     public void delete(String uuid) {
-        if (availabilityResume(uuid)) {
-            storage[index] = storage[size - 1];
+        if (findIndex(uuid) != -1) {
+            storage[findIndex(uuid)] = storage[size - 1];
             storage[size - 1] = null;
             size--;
         }
@@ -53,31 +60,24 @@ public class ArrayStorage {
     }
 
     public void update(Resume resume) {
-        if (availabilityResume(resume.getUuid())) {
-            storage[index] = resume;
+        if (findIndex(resume.getUuid()) != -1) {
+            storage[findIndex(resume.getUuid())] = resume;
         }
     }
 
-    private boolean availabilityResume(String uuid) {
+    private int findIndex(String uuid) {
         boolean available = false;
+        int index = 0;
         for ( index = 0; index < size; index++) {
             if (storage[index].getUuid() == uuid) {
                 System.out.println("Резюме " + uuid + " найдено в списке имеющихся");
                 available = true;
+                return index;
             }
         }
-        if (available == false) {
+        if (!available) {
             System.out.println("Резюме " + uuid + " ранее не добавлялось");
         }
-        return available;
-    }
-
-    private boolean notOverflow() {
-        if (size == storage.length) {
-            System.out.println("Место хранения переполнено");
-            return true;
-        } else {
-            return false;
-        }
+        return -1;
     }
 }
