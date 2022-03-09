@@ -17,7 +17,8 @@ public class ArrayStorage {
     }
 
     public void save(Resume r) {
-        if (findIndex(r.getUuid()) != -1 && checkCapacity()) {
+        int index = findIndex(r.getUuid());
+        if (index != -1 && checkCapacity()) {
             storage[size] = r;
             size++;
         }
@@ -32,15 +33,17 @@ public class ArrayStorage {
     }
 
     public Resume get(String uuid) {
-        if (findIndex(uuid) != -1) {
-            return storage[findIndex(uuid)];
+        int index = findIndex(uuid);
+        if (index != -1) {
+            return storage[index];
         }
         return null;
     }
 
     public void delete(String uuid) {
-        if (findIndex(uuid) != -1) {
-            storage[findIndex(uuid)] = storage[size - 1];
+        int index = findIndex(uuid);
+        if (index != -1) {
+            storage[index] = storage[size - 1];
             storage[size - 1] = null;
             size--;
         }
@@ -60,23 +63,20 @@ public class ArrayStorage {
     }
 
     public void update(Resume resume) {
-        if (findIndex(resume.getUuid()) != -1) {
-            storage[findIndex(resume.getUuid())] = resume;
+        int index = findIndex(resume.getUuid());
+        if (index != -1) {
+            storage[index] = resume;
         }
     }
 
     private int findIndex(String uuid) {
-        boolean available = false;
         for (int i = 0; i < size; i++) {
             if (storage[i].getUuid() == uuid) {
                 System.out.println("Резюме " + uuid + " найдено в списке имеющихся");
-                available = true;
                 return i;
             }
         }
-        if (!available) {
-            System.out.println("Резюме " + uuid + " ранее не добавлялось");
-        }
+        System.out.println("Резюме " + uuid + " ранее не добавлялось");
         return -1;
     }
 }
