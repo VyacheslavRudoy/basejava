@@ -67,8 +67,7 @@ public class ArrayStorage {
 
     private int findIndex(String uuid) {
         boolean available = false;
-        int index = 0;
-        for ( index = 0; index < size; index++) {
+        for (int index = 0; index < size; index++) {
             if (storage[index].getUuid() == uuid) {
                 System.out.println("Резюме " + uuid + " найдено в списке имеющихся");
                 available = true;
