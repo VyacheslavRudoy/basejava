@@ -67,11 +67,11 @@ public class ArrayStorage {
 
     private int findIndex(String uuid) {
         boolean available = false;
-        for (int index = 0; index < size; index++) {
-            if (storage[index].getUuid() == uuid) {
+        for (int i = 0; i < size; i++) {
+            if (storage[i].getUuid() == uuid) {
                 System.out.println("Резюме " + uuid + " найдено в списке имеющихся");
                 available = true;
-                return index;
+                return i;
             }
         }
         if (!available) {
