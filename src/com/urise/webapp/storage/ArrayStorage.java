@@ -18,7 +18,7 @@ public class ArrayStorage {
 
     public void save(Resume r) {
         int index = findIndex(r.getUuid());
-        if (index != -1 && checkCapacity()) {
+        if (index == -1 && checkCapacity()) {
             storage[size] = r;
             size++;
         }
@@ -27,9 +27,9 @@ public class ArrayStorage {
     private boolean checkCapacity() {
         if (size == storage.length) {
             System.out.println("Место хранения переполнено");
-            return true;
+            return false;
         }
-        return false;
+        return true;
     }
 
     public Resume get(String uuid) {
@@ -53,8 +53,8 @@ public class ArrayStorage {
      * @return array, contains only Resumes in storage (without null)
      */
     public Resume[] getAll() {
-        Resume[] copyStorage = new Resume[storage.length];
-        System.arraycopy(storage, 0, copyStorage, 0, storage.length);
+        Resume[] copyStorage = new Resume[size];
+        System.arraycopy(storage, 0, copyStorage, 0, size);
         return copyStorage;
     }
 
@@ -71,7 +71,7 @@ public class ArrayStorage {
 
     private int findIndex(String uuid) {
         for (int i = 0; i < size; i++) {
-            if (storage[i].getUuid() == uuid) {
+            if (storage[i].getUuid().equals(uuid)) {
                 System.out.println("Резюме " + uuid + " найдено в списке имеющихся");
                 return i;
             }
