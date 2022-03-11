@@ -1,14 +1,15 @@
-package com.urise.webapp.storage;
+package ru.javawebinar.basejava.storage;
 
-import com.urise.webapp.model.Resume;
+import ru.javawebinar.basejava.model.Resume;
 
 import java.util.Arrays;
 
 /**
  * Array based storage for Resumes
  */
-public class ArrayStorage {
-    private Resume[] storage = new Resume[10000];
+public class ArrayStorage implements Storage {
+    private static final int STORAGE_LIMIT = 10000;
+    private Resume[] storage = new Resume[STORAGE_LIMIT];
     private int size = 0;
 
     public void clear() {
@@ -25,7 +26,7 @@ public class ArrayStorage {
     }
 
     private boolean checkCapacity() {
-        if (size == storage.length) {
+        if (size >= STORAGE_LIMIT) {
             System.out.println("Место хранения переполнено");
             return false;
         }
@@ -49,13 +50,8 @@ public class ArrayStorage {
         }
     }
 
-    /**
-     * @return array, contains only Resumes in storage (without null)
-     */
     public Resume[] getAll() {
-        Resume[] copyStorage = new Resume[size];
-        System.arraycopy(storage, 0, copyStorage, 0, size);
-        return copyStorage;
+        return Arrays.copyOfRange(storage, 0, size);
     }
 
     public int size() {
