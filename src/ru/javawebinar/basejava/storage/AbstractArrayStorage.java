@@ -21,12 +21,7 @@ public abstract class AbstractArrayStorage implements Storage {
         }
     }
 
-    public void clear() {
-        Arrays.fill(storage, 0, size, null);
-        size = 0;
-    }
-
-    protected boolean checkCapacity() {
+    private boolean checkCapacity() {
         if (size >= STORAGE_LIMIT) {
             System.out.println("Место хранения переполнено");
             return false;
@@ -34,7 +29,12 @@ public abstract class AbstractArrayStorage implements Storage {
         return true;
     }
 
-     public final void update(Resume resume) {
+    public void clear() {
+        Arrays.fill(storage, 0, size, null);
+        size = 0;
+    }
+
+    public final void update(Resume resume) {
         int index = getIndex(resume.getUuid());
         if (index > -1) {
             storage[index] = resume;
@@ -57,7 +57,17 @@ public abstract class AbstractArrayStorage implements Storage {
         return null;
     }
 
-    protected abstract int getIndex(String uuid);
+    public void delete(String uuid) {
+        int index = getIndex(uuid);
+        if (index > -1) {
+            for (int i = index + 1; i < size; i++) {
+                storage[index] = storage[i];
+                index++;
+            }
+            storage[size] = null;
+            size--;
+        }
+    }
 
-    public abstract void delete(String uuid);
+    protected abstract int getIndex(String uuid);
 }

@@ -7,7 +7,7 @@ import ru.javawebinar.basejava.storage.SortedArrayStorage;
  * Test for your com.urise.webapp.storage.ArrayStorage implementation
  */
 public class MainTestArrayStorage {
-    static final SortedArrayStorage ARRAY_STORAGE = new SortedArrayStorage();
+    static final SortedArrayStorage SORTED_ARRAY_STORAGE = new SortedArrayStorage();
 
     public static void main(String[] args) {
         Resume r1 = new Resume();
@@ -17,28 +17,28 @@ public class MainTestArrayStorage {
         Resume r3 = new Resume();
         r3.setUuid("uuid3");
 
-        ARRAY_STORAGE.save(r1);
-        ARRAY_STORAGE.save(r2);
-        ARRAY_STORAGE.save(r3);
+        SORTED_ARRAY_STORAGE.save(r1);
+        SORTED_ARRAY_STORAGE.save(r2);
+        SORTED_ARRAY_STORAGE.save(r3);
 
-        System.out.println("Get r1: " + ARRAY_STORAGE.get(r1.getUuid()));
-        System.out.println("Size: " + ARRAY_STORAGE.size());
+        System.out.println("Get r1: " + SORTED_ARRAY_STORAGE.get(r1.getUuid()));
+        System.out.println("Size: " + SORTED_ARRAY_STORAGE.size());
 
-        System.out.println("Get dummy: " + ARRAY_STORAGE.get("dummy"));
+        System.out.println("Get dummy: " + SORTED_ARRAY_STORAGE.get("dummy"));
 
         printAll();
-        ARRAY_STORAGE.delete(r1.getUuid());
+        SORTED_ARRAY_STORAGE.delete(r1.getUuid());
         printAll();
-        ARRAY_STORAGE.clear();
+        SORTED_ARRAY_STORAGE.clear();
         printAll();
-        ARRAY_STORAGE.update(r1);
+        SORTED_ARRAY_STORAGE.update(r1);
 
-        System.out.println("Size: " + ARRAY_STORAGE.size());
+        System.out.println("Size: " + SORTED_ARRAY_STORAGE.size());
     }
 
     static void printAll() {
         System.out.println("\nGet All");
-        for (Resume r : ARRAY_STORAGE.getAll()) {
+        for (Resume r : SORTED_ARRAY_STORAGE.getAll()) {
             System.out.println(r);
         }
     }
