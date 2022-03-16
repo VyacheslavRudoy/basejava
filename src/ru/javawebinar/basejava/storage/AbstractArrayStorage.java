@@ -15,7 +15,7 @@ public abstract class AbstractArrayStorage implements Storage {
 
     public final void save(Resume r) {
         int index = getIndex(r.getUuid());
-        if (index > 0) {
+        if (index > -1) {
             System.out.println("Резюме " + r.getUuid() + " найдено в списке имеющихся");
         }
         else if (index < 0 && checkCapacity()) {
