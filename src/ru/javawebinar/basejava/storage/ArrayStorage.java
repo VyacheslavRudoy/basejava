@@ -7,13 +7,12 @@ public class ArrayStorage extends AbstractArrayStorage {
 
     @Override
     protected int getIndex(String uuid) {
+        int index = -1;
         for (int i = 0; i < size; i++) {
             if (storage[i].getUuid().equals(uuid)) {
-                System.out.println("Резюме " + uuid + " найдено в списке имеющихся");
-                return i;
+                index = i;
             }
         }
-        System.out.println("Резюме " + uuid + " ранее не добавлялось");
-        return -1;
+        return index;
     }
 }
