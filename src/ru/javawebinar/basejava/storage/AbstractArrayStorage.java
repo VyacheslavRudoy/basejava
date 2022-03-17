@@ -13,18 +13,9 @@ public abstract class AbstractArrayStorage implements Storage {
     protected Resume[] storage = new Resume[STORAGE_LIMIT];
     protected int size = 0;
 
-    public final void save(Resume r) {
-        int index = getIndex(r.getUuid());
-        if (index > -1) {
-            System.out.println("Резюме " + r.getUuid() + " найдено в списке имеющихся");
-        }
-        else if (index < 0 && checkCapacity()) {
-            storage[size] = r;
-            size++;
-        }
-    }
+    public abstract void save(Resume r);
 
-    private boolean checkCapacity() {
+    protected boolean checkCapacity() {
         if (size >= STORAGE_LIMIT) {
             System.out.println("Место хранения переполнено");
             return false;
@@ -67,9 +58,8 @@ public abstract class AbstractArrayStorage implements Storage {
     public void delete(String uuid) {
         int index = getIndex(uuid);
         int remainingElements = size - (index + 1);
-        System.arraycopy(storage, 0, storage, index, remainingElements);
         System.arraycopy(storage, index + 1, storage, index, remainingElements);
-        size --;
+        size--;
     }
 
     protected abstract int getIndex(String uuid);
