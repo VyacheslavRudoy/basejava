@@ -13,7 +13,17 @@ public abstract class AbstractArrayStorage implements Storage {
     protected Resume[] storage = new Resume[STORAGE_LIMIT];
     protected int size = 0;
 
-    public abstract void save(Resume r);
+    public final void save(Resume r) {
+        int index = getIndex(r.getUuid());
+        if (index > -1) {
+            System.out.println("Резюме " + r.getUuid() + " найдено в списке имеющихся");
+        } else if (index < 0 && checkCapacity()) {
+            saveRealization(r, index);
+            size++;
+        }
+    }
+
+    protected abstract void saveRealization(Resume r, int index);
 
     protected boolean checkCapacity() {
         if (size >= STORAGE_LIMIT) {
