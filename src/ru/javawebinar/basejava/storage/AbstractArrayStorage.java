@@ -18,14 +18,14 @@ public abstract class AbstractArrayStorage implements Storage {
         if (index > -1) {
             System.out.println("Резюме " + r.getUuid() + " найдено в списке имеющихся");
         } else if (index < 0 && checkCapacity()) {
-            saveRealization(r, index);
+            saveToArray(r, index);
             size++;
         }
     }
 
-    protected abstract void saveRealization(Resume r, int index);
+    protected abstract void saveToArray(Resume r, int index);
 
-    protected boolean checkCapacity() {
+    private boolean checkCapacity() {
         if (size >= STORAGE_LIMIT) {
             System.out.println("Место хранения переполнено");
             return false;
