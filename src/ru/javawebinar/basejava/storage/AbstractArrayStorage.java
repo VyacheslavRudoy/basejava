@@ -1,5 +1,8 @@
 package ru.javawebinar.basejava.storage;
 
+import ru.javawebinar.basejava.exception.ExistStorageException;
+import ru.javawebinar.basejava.exception.NotExistStorageException;
+import ru.javawebinar.basejava.exception.StorageException;
 import ru.javawebinar.basejava.model.Resume;
 
 import java.util.Arrays;
@@ -16,9 +19,9 @@ public abstract class AbstractArrayStorage implements Storage {
     public final void save(Resume r) {
         int index = getIndex(r.getUuid());
         if (index > -1) {
-            System.out.println("Резюме " + r.getUuid() + " найдено в списке имеющихся");
+            throw new ExistStorageException(r.getUuid());
         } else if (size >= STORAGE_LIMIT) {
-            System.out.println("Место хранения переполнено");
+            throw new StorageException("Storage overflow", r.getUuid());
         } else {
             saveToArray(r, index);
             size++;
@@ -32,12 +35,12 @@ public abstract class AbstractArrayStorage implements Storage {
         size = 0;
     }
 
-    public final void update(Resume resume) {
-        int index = getIndex(resume.getUuid());
+    public final void update(Resume r) {
+        int index = getIndex(r.getUuid());
         if (index < 0) {
-            System.out.println("Резюме " + resume.getUuid() + " ранее не добавлялось");
+            throw new NotExistStorageException(r.getUuid());
         } else {
-            storage[index] = resume;
+            storage[index] = r;
         }
     }
 
@@ -52,8 +55,7 @@ public abstract class AbstractArrayStorage implements Storage {
     public final Resume get(String uuid) {
         int index = getIndex(uuid);
         if (index < 0) {
-            System.out.println("Резюме " + uuid + " ранее не добавлялось");
-            return null;
+            throw new NotExistStorageException(uuid);
         }
         return storage[index];
     }
@@ -61,7 +63,7 @@ public abstract class AbstractArrayStorage implements Storage {
     public void delete(String uuid) {
         int index = getIndex(uuid);
         if (index < 0) {
-            System.out.println("Резюме " + uuid + " ранее не добавлялось");
+            throw new NotExistStorageException(uuid);
         } else {
             fillDeletedElement(index);
             size--;
