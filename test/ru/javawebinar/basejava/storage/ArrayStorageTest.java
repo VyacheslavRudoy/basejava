@@ -1,20 +1,20 @@
 package ru.javawebinar.basejava.storage;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.jupiter.api.Assertions.*;
 
-public class ArrayStorageTest extends AbstractArrayStorageTest {
+class ArrayStorageTest extends AbstractArrayStorageTest {
 
     @Test
-    public void saveToArray() {
+    void saveToArray() {
     }
 
     @Test
-    public void fillDeletedElement() {
+    void fillDeletedElement() {
     }
 
     @Test
-    public void getIndex() {
+    void getIndex() {
     }
 }
