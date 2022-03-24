@@ -55,12 +55,8 @@ public abstract class AbstractArrayStorageTest {
 
     @Test(expected = NotExistStorageException.class)
     public void updateNotExist() throws Exception {
-        try {
-            Resume resume = new Resume("not exist");
-            storage.update(resume);
-        } catch (NotExistStorageException e) {
-            Assert.fail("update not exist resume");
-        }
+        Resume resume = new Resume("not exist");
+        storage.update(resume);
     }
 
     @Test
@@ -83,27 +79,24 @@ public abstract class AbstractArrayStorageTest {
     @Test(expected = StorageException.class)
     public void storageOverflow() throws Exception {
         try {
-            for (int i = 4; i < AbstractArrayStorage.STORAGE_LIMIT; i++) {
+            for (int i = 4; i <= AbstractArrayStorage.STORAGE_LIMIT; i++) {
                 storage.save(new Resume());
             }
         } catch (StorageException e) {
             Assert.fail("overflow happened ahead of time");
         }
+        storage.save(new Resume());
     }
 
     @Test
     public void delete() throws Exception {
-        storage.delete(UUID_4);
-        Assert.assertEquals(3, storage.size());
+        storage.delete(UUID_3);
+        Assert.assertEquals(2, storage.size());
     }
 
     @Test(expected = NotExistStorageException.class)
     public void deleteNotExist() throws Exception {
-        try {
-            storage.delete("not exist");
-        } catch (NotExistStorageException e) {
-            Assert.fail("deleted non-existent resume");
-        }
+        storage.delete("not exist");
     }
 
     @Test
@@ -113,10 +106,6 @@ public abstract class AbstractArrayStorageTest {
 
     @Test(expected = NotExistStorageException.class)
     public void getNotExist() throws Exception {
-        try {
-            storage.get("not exist");
-        } catch (NotExistStorageException e) {
-            Assert.fail("non-existent resume found");
-        }
+        storage.get("not exist");
     }
 }
