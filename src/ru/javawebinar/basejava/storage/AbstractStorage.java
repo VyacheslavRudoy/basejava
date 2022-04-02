@@ -6,53 +6,44 @@ import ru.javawebinar.basejava.model.Resume;
 
 public abstract class AbstractStorage implements Storage {
 
-    protected abstract void updateStorage(Resume r, int index);
+    protected abstract void updateStorage(Resume r);
 
-    protected abstract void saveStorage(int index, Resume r);
+    protected abstract void saveStorage(Resume r);
 
-    protected abstract Resume getStorage(int index);
+    protected abstract Resume getStorage(String uuid);
 
-    protected abstract void deleteStorage(int index);
+    protected abstract void deleteStorage(String uuid);
 
     public void update(Resume r) {
-        int index = getIndex(r.getUuid());
-        if (index < 0) {
+        if (!availability(r.getUuid())) {
             throw new NotExistStorageException(r.getUuid());
         }
-        updateStorage(r, index);
+        updateStorage(r);
     }
 
-    public abstract void clear();
-
     public void save(Resume r) {
-        int index = getIndex(r.getUuid());
-        if (index > -1) {
+        if (availability(r.getUuid())) {
             throw new ExistStorageException(r.getUuid());
-        } else {
-            saveStorage(index, r);
         }
+        saveStorage(r);
     }
 
     public Resume get(String uuid) {
-        int index = getIndex(uuid);
-        if (index < 0) {
+        if (!availability(uuid)) {
             throw new NotExistStorageException(uuid);
         }
-        return getStorage(index);
+        return getStorage(uuid);
     }
 
     public void delete(String uuid) {
-        int index = getIndex(uuid);
-        if (index < 0) {
+        if (!availability(uuid)) {
             throw new NotExistStorageException(uuid);
         }
-        deleteStorage(index);
+        deleteStorage(uuid);
     }
 
-    public abstract Resume[] getAll();
-
-    public abstract int size();
-
     protected abstract int getIndex(String uuid);
+
+    protected abstract boolean availability(String uuid);
 }
 

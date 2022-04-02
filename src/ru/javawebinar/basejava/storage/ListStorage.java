@@ -13,20 +13,20 @@ public class ListStorage extends AbstractStorage {
         storage.clear();
     }
 
-    protected void updateStorage(Resume r, int index) {
-        storage.set(index, r);
+    protected void updateStorage(Resume r) {
+        storage.set(getIndex(r.getUuid()), r);
     }
 
-    protected void saveStorage(int index, Resume r) {
+    protected void saveStorage(Resume r) {
         storage.add(r);
     }
 
-    protected Resume getStorage(int index) {
-        return storage.get(index);
+    protected Resume getStorage(String uuid) {
+        return storage.get(getIndex(uuid));
     }
 
-    protected void deleteStorage(int index) {
-        storage.remove(index);
+    protected void deleteStorage(String uuid) {
+        storage.remove(getIndex(uuid));
     }
 
     public Resume[] getAll() {
@@ -41,6 +41,13 @@ public class ListStorage extends AbstractStorage {
     protected int getIndex(String uuid) {
         Resume searchIndex = new Resume(uuid);
         return storage.indexOf(searchIndex);
+    }
+
+    protected boolean availability(String uuid) {
+        if (getIndex(uuid) > -1) {
+            return true;
+        }
+        return false;
     }
 }
 
