@@ -42,8 +42,6 @@ public abstract class AbstractStorage implements Storage {
         deleteStorage(uuid);
     }
 
-    protected abstract int getIndex(String uuid);
-
     protected abstract boolean availability(String uuid);
 }
 

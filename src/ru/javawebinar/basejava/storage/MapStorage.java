@@ -43,9 +43,4 @@ public class MapStorage extends AbstractStorage {
         }
         return false;
     }
-
-    @Override
-    protected int getIndex(String uuid) {
-        return 0;
-    }
 }
