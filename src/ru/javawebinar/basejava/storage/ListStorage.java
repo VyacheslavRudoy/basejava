@@ -13,20 +13,20 @@ public class ListStorage extends AbstractStorage {
         storage.clear();
     }
 
-    protected void updateStorage(Resume r) {
-        storage.set(getIndex(r.getUuid()), r);
+    protected void updateStorage(Resume r, int index) {
+        storage.set(index, r);
     }
 
-    protected void saveStorage(Resume r) {
+    protected void saveStorage(Resume r, int index) {
         storage.add(r);
     }
 
-    protected Resume getStorage(String uuid) {
-        return storage.get(getIndex(uuid));
+    protected Resume getStorage(String uuid, int index) {
+        return storage.get(index);
     }
 
-    protected void deleteStorage(String uuid) {
-        storage.remove(getIndex(uuid));
+    protected void deleteStorage(String uuid, int index) {
+        storage.remove(index);
     }
 
     public Resume[] getAll() {

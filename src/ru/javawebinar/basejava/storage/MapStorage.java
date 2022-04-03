@@ -9,19 +9,19 @@ public class MapStorage extends AbstractStorage {
 
     private Map<String, Resume> storage = new TreeMap<>();
 
-    protected void updateStorage(Resume r) {
+    protected void updateStorage(Resume r, int index) {
         storage.put(r.getUuid(), r);
     }
 
-    protected void saveStorage(Resume r) {
+    protected void saveStorage(Resume r, int index) {
         storage.put(r.getUuid(), r);
     }
 
-    protected Resume getStorage(String uuid) {
+    protected Resume getStorage(String uuid, int index) {
         return storage.get(uuid);
     }
 
-    protected void deleteStorage(String uuid) {
+    protected void deleteStorage(String uuid, int index) {
         storage.remove(uuid);
     }
 
