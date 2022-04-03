@@ -42,12 +42,5 @@ public class ListStorage extends AbstractStorage {
         Resume searchIndex = new Resume(uuid);
         return storage.indexOf(searchIndex);
     }
-
-    protected boolean availability(String uuid) {
-        if (getIndex(uuid) > -1) {
-            return true;
-        }
-        return false;
-    }
 }
 

@@ -51,13 +51,6 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         size--;
     }
 
-    protected boolean availability(String uuid) {
-        if (getIndex(uuid) > -1) {
-            return true;
-        }
-        return false;
-    }
-
     protected abstract void fillDeletedElement(int index);
 
     protected abstract int getIndex(String uuid);

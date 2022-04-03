@@ -37,10 +37,11 @@ public class MapStorage extends AbstractStorage {
         return storage.size();
     }
 
-    protected boolean availability(String uuid) {
-        if (storage.containsKey(uuid)) {
-            return true;
+    protected int getIndex(String uuid) {
+        if (storage.get(uuid) == null) {
+            return -1;
+        } else {
+            return 0;
         }
-        return false;
     }
 }
