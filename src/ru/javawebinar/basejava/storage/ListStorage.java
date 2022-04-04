@@ -13,20 +13,20 @@ public class ListStorage extends AbstractStorage {
         storage.clear();
     }
 
-    protected void updateResume(Resume r, int key) {
-        storage.set(key, r);
+    protected void updateResume(Resume r) {
+        storage.set(searchKey(r.getUuid()), r);
     }
 
-    protected void saveResume(Resume r, int key) {
+    protected void saveResume(Resume r) {
         storage.add(r);
     }
 
-    protected Resume getResume(String uuid, int key) {
-        return storage.get(key);
+    protected Resume getResume(String uuid) {
+        return storage.get(searchKey(uuid));
     }
 
-    protected void deleteResume(String uuid, int key) {
-        storage.remove(key);
+    protected void deleteResume(String uuid) {
+        storage.remove(searchKey(uuid));
     }
 
     public Resume[] getAll() {

@@ -6,46 +6,42 @@ import ru.javawebinar.basejava.model.Resume;
 
 public abstract class AbstractStorage implements Storage {
 
-    protected abstract void updateResume(Resume r, int key);
+    protected abstract void updateResume(Resume r);
 
-    protected abstract void saveResume(Resume r, int key);
+    protected abstract void saveResume(Resume r);
 
-    protected abstract Resume getResume(String uuid, int key);
+    protected abstract Resume getResume(String uuid);
 
-    protected abstract void deleteResume(String uuid, int key);
+    protected abstract void deleteResume(String uuid);
 
     public void update(Resume r) {
-        int key = searchKey(r.getUuid());
-        notExist(r.getUuid(), key);
-        updateResume(r, key);
+        notExist(r.getUuid());
+        updateResume(r);
     }
 
     public void save(Resume r) {
-        int key = searchKey(r.getUuid());
-        existStorage(r.getUuid(), key);
-        saveResume(r, key);
+        existStorage(r.getUuid());
+        saveResume(r);
     }
 
     public Resume get(String uuid) {
-        int key = searchKey(uuid);
-        notExist(uuid, key);
-        return getResume(uuid, key);
+        notExist(uuid);
+        return getResume(uuid);
     }
 
     public void delete(String uuid) {
-        int key = searchKey(uuid);
-        notExist(uuid, key);
-        deleteResume(uuid, key);
+        notExist(uuid);
+        deleteResume(uuid);
     }
 
-    protected void notExist(String uuid, int key) {
-        if (key < 0) {
+    protected void notExist(String uuid) {
+        if (searchKey(uuid) < 0) {
             throw new NotExistStorageException(uuid);
         }
     }
 
-    protected void existStorage(String uuid, int key) {
-        if (key > -1) {
+    protected void existStorage(String uuid) {
+        if (searchKey(uuid) > -1) {
             throw new ExistStorageException(uuid);
         }
     }
