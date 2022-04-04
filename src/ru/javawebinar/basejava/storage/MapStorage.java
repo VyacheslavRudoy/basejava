@@ -9,19 +9,19 @@ public class MapStorage extends AbstractStorage {
 
     private Map<String, Resume> storage = new TreeMap<>();
 
-    protected void updateStorage(Resume r, int index) {
+    protected void updateResume(Resume r, int key) {
         storage.put(r.getUuid(), r);
     }
 
-    protected void saveStorage(Resume r, int index) {
+    protected void saveResume(Resume r, int key) {
         storage.put(r.getUuid(), r);
     }
 
-    protected Resume getStorage(String uuid, int index) {
+    protected Resume getResume(String uuid, int key) {
         return storage.get(uuid);
     }
 
-    protected void deleteStorage(String uuid, int index) {
+    protected void deleteResume(String uuid, int key) {
         storage.remove(uuid);
     }
 
@@ -37,7 +37,7 @@ public class MapStorage extends AbstractStorage {
         return storage.size();
     }
 
-    protected int getIndex(String uuid) {
+    protected int searchKey(String uuid) {
         if (storage.get(uuid) == null) {
             return -1;
         } else {

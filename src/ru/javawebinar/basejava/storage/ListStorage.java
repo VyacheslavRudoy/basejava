@@ -13,20 +13,20 @@ public class ListStorage extends AbstractStorage {
         storage.clear();
     }
 
-    protected void updateStorage(Resume r, int index) {
-        storage.set(index, r);
+    protected void updateResume(Resume r, int key) {
+        storage.set(key, r);
     }
 
-    protected void saveStorage(Resume r, int index) {
+    protected void saveResume(Resume r, int key) {
         storage.add(r);
     }
 
-    protected Resume getStorage(String uuid, int index) {
-        return storage.get(index);
+    protected Resume getResume(String uuid, int key) {
+        return storage.get(key);
     }
 
-    protected void deleteStorage(String uuid, int index) {
-        storage.remove(index);
+    protected void deleteResume(String uuid, int key) {
+        storage.remove(key);
     }
 
     public Resume[] getAll() {
@@ -38,9 +38,9 @@ public class ListStorage extends AbstractStorage {
         return storage.size();
     }
 
-    protected int getIndex(String uuid) {
-        Resume searchIndex = new Resume(uuid);
-        return storage.indexOf(searchIndex);
+    protected int searchKey(String uuid) {
+        Resume searchKey = new Resume(uuid);
+        return storage.indexOf(searchKey);
     }
 }
 
