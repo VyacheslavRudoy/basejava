@@ -41,11 +41,8 @@ public class MapStorage extends AbstractStorage {
         return uuid;
     }
 
-    protected boolean availability(String uuid) {
-        if (storage.get(uuid) != null) {
-            return true;
-        }
-        return false;
+    protected boolean isExist(String uuid) {
+        return storage.containsKey(uuid);
     }
 }
 

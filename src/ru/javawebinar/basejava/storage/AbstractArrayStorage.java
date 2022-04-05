@@ -48,14 +48,12 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
 
     protected void deleteResume(Object index) {
         fillDeletedElement((int) index);
+        storage[size - 1] = null;
         size--;
     }
 
-    protected boolean availability(String uuid) {
-        if ((int) searchKey(uuid) > -1) {
-            return true;
-        }
-        return false;
+    protected boolean isExist(String uuid) {
+        return (int) searchKey(uuid) > -1;
     }
 
     protected abstract void fillDeletedElement(int index);

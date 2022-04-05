@@ -43,11 +43,8 @@ public class ListStorage extends AbstractStorage {
         return storage.indexOf(searchKey);
     }
 
-    protected boolean availability(String uuid) {
-        if ((int) searchKey(uuid) != -1) {
-            return true;
-        }
-        return false;
+    protected boolean isExist(String uuid) {
+        return (int) searchKey(uuid) != -1;
     }
 }
 
