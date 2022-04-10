@@ -2,12 +2,11 @@ package ru.javawebinar.basejava.storage;
 
 import ru.javawebinar.basejava.model.Resume;
 
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 
-public class MapStorage extends AbstractStorage {
+public class MapStorageUuid extends AbstractStorage {
 
-    private Map<String, Resume> storage = new TreeMap<>();
+    private Map<String, Resume> storage = new HashMap<>();
 
     protected void updateResume(Resume r, Object key) {
         storage.put((String) key, r);
@@ -29,8 +28,8 @@ public class MapStorage extends AbstractStorage {
         storage.clear();
     }
 
-    public Resume[] getAll() {
-        return storage.values().toArray(new Resume[storage.size()]);
+    public List<Resume> getAll() {
+        return new ArrayList<>(storage.values());
     }
 
     public int size() {
@@ -41,7 +40,7 @@ public class MapStorage extends AbstractStorage {
         return uuid;
     }
 
-    protected boolean isExist(String uuid) {
+    protected boolean isExist(Object uuid) {
         return storage.containsKey(uuid);
     }
 }

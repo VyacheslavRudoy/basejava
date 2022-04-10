@@ -29,9 +29,8 @@ public class ListStorage extends AbstractStorage {
         storage.remove((int) index);
     }
 
-    public Resume[] getAll() {
-        List<Resume> copy = new ArrayList<>(storage);
-        return copy.toArray(new Resume[storage.size()]);
+    public List<Resume> getAll() {
+        return new ArrayList<>(storage);
     }
 
     public int size() {
@@ -39,12 +38,12 @@ public class ListStorage extends AbstractStorage {
     }
 
     protected Object searchKey(String uuid) {
-        Resume searchKey = new Resume(uuid);
+        Resume searchKey = new Resume((String) uuid);
         return storage.indexOf(searchKey);
     }
 
-    protected boolean isExist(String uuid) {
-        return (int) searchKey(uuid) != -1;
+    protected boolean isExist(Object uuid) {
+        return (int) searchKey((String) uuid) != -1;
     }
 }
 
