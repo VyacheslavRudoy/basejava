@@ -6,10 +6,11 @@ import ru.javawebinar.basejava.exception.ExistStorageException;
 import ru.javawebinar.basejava.exception.NotExistStorageException;
 import ru.javawebinar.basejava.model.Resume;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertSame;
 
 public abstract class AbstractStorageTest {
     protected Storage storage;
@@ -73,13 +74,10 @@ public abstract class AbstractStorageTest {
     }
 
     @Test
-    public void getAll() throws Exception {
+    public void getAllSorted() throws Exception {
         List<Resume> resumes = storage.getAllSorted();
-        List<Resume> expected = new ArrayList<Resume>();
-        expected.add(RESUME_1);
-        expected.add(RESUME_2);
-        expected.add(RESUME_3);
-        resumes.equals(expected);
+        List<Resume> expected = Arrays.asList(RESUME_1, RESUME_2, RESUME_3);
+        assertEquals(resumes, expected);
     }
 
     @Test

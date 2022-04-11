@@ -40,8 +40,8 @@ public class MapStorageUuid extends AbstractStorage {
         return uuid;
     }
 
-    protected boolean isExist(Object uuid) {
-        return storage.containsKey(uuid);
+    protected boolean isExist(Object searchKey) {
+        return storage.containsKey(searchKey);
     }
 }
 

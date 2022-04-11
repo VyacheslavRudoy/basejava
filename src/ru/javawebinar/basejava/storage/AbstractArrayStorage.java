@@ -54,8 +54,8 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         size--;
     }
 
-    protected boolean isExist(Object uuid) {
-        return (int) searchKey((String) uuid) > -1;
+    protected boolean isExist(Object index) {
+        return (int) index > -1;
     }
 
     protected abstract void fillDeletedElement(int index);
