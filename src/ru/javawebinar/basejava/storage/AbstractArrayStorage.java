@@ -9,30 +9,29 @@ import java.util.List;
 /**
  * Array based storage for Resumes
  */
-public abstract class AbstractArrayStorage extends AbstractStorage {
+public abstract class AbstractArrayStorage extends AbstractStorage<Integer> {
     protected static final int STORAGE_LIMIT = 10000;
 
     protected Resume[] storage = new Resume[STORAGE_LIMIT];
     protected int size = 0;
 
-    protected void saveResume(Resume r, Object index) {
+    protected void saveResume(Resume r, Integer index) {
         if (size >= STORAGE_LIMIT) {
             throw new StorageException("Storage overflow", r.getUuid());
         }
-        saveToArray(r, (int) index);
+        saveToArray(r, index);
         size++;
     }
 
     protected abstract void saveToArray(Resume r, int index);
-
 
     public void clear() {
         Arrays.fill(storage, 0, size, null);
         size = 0;
     }
 
-    protected void updateResume(Resume r, Object index) {
-        storage[(int) index] = r;
+    protected void updateResume(Resume r, Integer index) {
+        storage[index] = r;
     }
 
     public List<Resume> getAll() {
@@ -44,21 +43,21 @@ public abstract class AbstractArrayStorage extends AbstractStorage {
         return size;
     }
 
-    protected Resume getResume(Object index) {
-        return storage[(int) index];
+    protected Resume getResume(Integer index) {
+        return storage[index];
     }
 
-    protected void deleteResume(Object index) {
-        fillDeletedElement((int) index);
+    protected void deleteResume(Integer index) {
+        fillDeletedElement(index);
         storage[size - 1] = null;
         size--;
     }
 
-    protected boolean isExist(Object index) {
-        return (int) index > -1;
+    protected boolean isExist(Integer index) {
+        return index > -1;
     }
 
     protected abstract void fillDeletedElement(int index);
 
-    protected abstract Object searchKey(String uuid);
+    protected abstract Integer searchKey(String uuid);
 }

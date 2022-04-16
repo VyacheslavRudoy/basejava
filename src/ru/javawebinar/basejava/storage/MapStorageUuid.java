@@ -4,23 +4,23 @@ import ru.javawebinar.basejava.model.Resume;
 
 import java.util.*;
 
-public class MapStorageUuid extends AbstractStorage {
+public class MapStorageUuid extends AbstractStorage<String> {
 
     private Map<String, Resume> storage = new HashMap<>();
 
-    protected void updateResume(Resume r, Object key) {
-        storage.put((String) key, r);
+    protected void updateResume(Resume r, String key) {
+        storage.put(key, r);
     }
 
-    protected void saveResume(Resume r, Object key) {
-        storage.put((String) key, r);
+    protected void saveResume(Resume r, String key) {
+        storage.put(key, r);
     }
 
-    protected Resume getResume(Object key) {
+    protected Resume getResume(String key) {
         return storage.get(key);
     }
 
-    protected void deleteResume(Object key) {
+    protected void deleteResume(String key) {
         storage.remove(key);
     }
 
@@ -36,11 +36,11 @@ public class MapStorageUuid extends AbstractStorage {
         return storage.size();
     }
 
-    protected Object searchKey(String uuid) {
+    protected String searchKey(String uuid) {
         return uuid;
     }
 
-    protected boolean isExist(Object searchKey) {
+    protected boolean isExist(String searchKey) {
         return storage.containsKey(searchKey);
     }
 }
