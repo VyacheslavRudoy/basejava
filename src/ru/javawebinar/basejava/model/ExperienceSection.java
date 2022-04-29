@@ -1,12 +1,14 @@
 package ru.javawebinar.basejava.model;
 
 import java.util.List;
+import java.util.Objects;
 
 public class ExperienceSection extends AbstractSection {
 
     private final List<Experience> experiences;
 
     public ExperienceSection(List<Experience> experiences) {
+        Objects.requireNonNull(experiences, "experiences must not be null");
         this.experiences = experiences;
     }
 
@@ -26,11 +28,11 @@ public class ExperienceSection extends AbstractSection {
 
         ExperienceSection that = (ExperienceSection) o;
 
-        return experiences != null ? experiences.equals(that.experiences) : that.experiences == null;
+        return experiences.equals(that.experiences);
     }
 
     @Override
     public int hashCode() {
-        return experiences != null ? experiences.hashCode() : 0;
+        return experiences.hashCode();
     }
 }

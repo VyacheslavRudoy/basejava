@@ -102,7 +102,7 @@ public class ResumeTestData {
 
 
         List<Experience> experience = new ArrayList<>();
-        experience.add(new Experience(LocalDate.of(2013, 10, 1), "Java Online Projects",
+        experience.add(new Experience(LocalDate.of(2013, 10, 1), LocalDate.now(), "Java Online Projects",
                 "Автор проекта.", "Создание, организация и проведение Java онлайн " +
                 "проектов и стажировок. \n"));
 

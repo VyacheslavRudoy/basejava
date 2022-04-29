@@ -1,16 +1,18 @@
 package ru.javawebinar.basejava.model;
 
-import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
 
 public class BulletedLineSection extends AbstractSection {
 
-    private final ArrayList<String> list;
+    private final List<String> list;
 
-    public BulletedLineSection(ArrayList<String> list) {
+    public BulletedLineSection(List<String> list) {
+        Objects.requireNonNull(list, "list must not be null");
         this.list = list;
     }
 
-    public ArrayList<String> getList() {
+    public List<String> getList() {
         return list;
     }
 
@@ -26,11 +28,11 @@ public class BulletedLineSection extends AbstractSection {
 
         BulletedLineSection that = (BulletedLineSection) o;
 
-        return list != null ? list.equals(that.list) : that.list == null;
+        return list.equals(that.list);
     }
 
     @Override
     public int hashCode() {
-        return list != null ? list.hashCode() : 0;
+        return list.hashCode();
     }
 }
