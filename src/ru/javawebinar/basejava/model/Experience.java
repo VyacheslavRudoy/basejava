@@ -17,11 +17,26 @@ public class Experience {
         this.additionalInformation = additionalInformation;
     }
 
+    public Experience(LocalDate startDate, String companyName, String positionName, String additionalInformation) {
+        this.startDate = startDate;
+        this.finishDate = null;
+        this.companyName = companyName;
+        this.positionName = positionName;
+        this.additionalInformation = additionalInformation;
+    }
+
+    public String replacementFinishDate(LocalDate finishDate) {
+        if (finishDate == null) {
+            return "Сейчас";
+        }
+        return String.valueOf(finishDate);
+    }
+
     @Override
     public String toString() {
         return "Experience{" +
                 "startDate='" + startDate + '\'' +
-                ", finishDate=" + finishDate +
+                ", finishDate=" + replacementFinishDate(finishDate) +
                 ", companyName='" + companyName + '\'' +
                 ", positionName='" + positionName + '\'' +
                 ", additionalInformation='" + additionalInformation + '\'' +
