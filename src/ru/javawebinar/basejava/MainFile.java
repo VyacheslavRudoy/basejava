@@ -29,5 +29,23 @@ public class MainFile {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        MainFile.getAllFiles(dir);
+    }
+
+
+    public static void getAllFiles(File directory) {
+        if (!directory.exists()) {
+            System.out.println("Такого объекта файловой системы не существует");
+        } else if (directory.isFile()) {
+            System.out.println(directory.getName());
+        } else {
+            System.out.println(directory.getName());
+            File[] files = directory.listFiles();
+            for (File dirOrFile : files) {
+                getAllFiles(dirOrFile);
+            }
+        }
     }
 }
+
+
