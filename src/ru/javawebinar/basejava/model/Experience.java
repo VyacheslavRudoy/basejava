@@ -1,10 +1,14 @@
 package ru.javawebinar.basejava.model;
 
 import java.time.LocalDate;
+import java.time.Month;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
+
+import static ru.javawebinar.basejava.util.DateUtil.NOW;
+import static ru.javawebinar.basejava.util.DateUtil.of;
 
 public class Experience {
     private final Link homePage;
@@ -54,6 +58,14 @@ public class Experience {
         private final String positionName;
         private final String additionalInformation;
 
+        public Position(int startYear, Month startMonth, String title, String description) {
+            this(of(startYear, startMonth), NOW, title, description);
+        }
+
+        public Position(int startYear, Month startMonth, int endYear, Month endMonth, String title, String description) {
+            this(of(startYear, startMonth), of(endYear, endMonth), title, description);
+        }
+
         public Position(LocalDate startDate, LocalDate finishDate, String positionName, String additionalInformation) {
             Objects.requireNonNull(startDate, "startDate must not be null");
             Objects.requireNonNull(finishDate, "endDate must not be null");
@@ -80,15 +92,6 @@ public class Experience {
             return additionalInformation;
         }
 
-        public Position(LocalDate startDate, String positionName, String additionalInformation) {
-            Objects.requireNonNull(startDate, "startDate must not be null");
-            Objects.requireNonNull(positionName, "positionName must not be null");
-            this.startDate = startDate;
-            this.finishDate = null;
-            this.positionName = positionName;
-            this.additionalInformation = additionalInformation;
-        }
-
         @Override
         public boolean equals(Object o) {
             if (this == o) return true;
@@ -97,27 +100,25 @@ public class Experience {
             Position position = (Position) o;
 
             if (!startDate.equals(position.startDate)) return false;
-            if (finishDate != null ? !finishDate.equals(position.finishDate) : position.finishDate != null)
-                return false;
+            if (!finishDate.equals(position.finishDate)) return false;
             if (!positionName.equals(position.positionName)) return false;
-            return additionalInformation != null ? additionalInformation.equals(position.additionalInformation) : position.additionalInformation == null;
+            return additionalInformation.equals(position.additionalInformation);
         }
 
         @Override
         public int hashCode() {
             int result = startDate.hashCode();
-            result = 31 * result + (finishDate != null ? finishDate.hashCode() : 0);
+            result = 31 * result + finishDate.hashCode();
             result = 31 * result + positionName.hashCode();
-            result = 31 * result + (additionalInformation != null ? additionalInformation.hashCode() : 0);
+            result = 31 * result + additionalInformation.hashCode();
             return result;
         }
 
         @Override
         public String toString() {
-            String copyFinishDate = finishDate == null ? "Сейчас" : String.valueOf(finishDate);
             return "Position{" +
                     "startDate=" + startDate +
-                    ", finishDate=" + copyFinishDate +
+                    ", finishDate=" + finishDate +
                     ", positionName='" + positionName + '\'' +
                     ", additionalInformation='" + additionalInformation + '\'' +
                     '}';

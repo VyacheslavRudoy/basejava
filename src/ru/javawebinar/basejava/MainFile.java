@@ -41,8 +41,10 @@ public class MainFile {
         } else {
             System.out.println(directory.getName());
             File[] files = directory.listFiles();
-            for (File dirOrFile : files) {
-                getAllFiles(dirOrFile);
+            if (files != null) {
+                for (File dirOrFile : files) {
+                    getAllFiles(dirOrFile);
+                }
             }
         }
     }
