@@ -3,16 +3,17 @@ package ru.javawebinar.basejava.model;
 import java.util.List;
 import java.util.Objects;
 
-public class ExperienceSection extends AbstractSection {
+public class OrganizationSection extends Section {
+    private static final long serialVersionUID = 1L;
 
-    private final List<Experience> experiences;
+    private final List<Organization> experiences;
 
-    public ExperienceSection(List<Experience> experiences) {
+    public OrganizationSection(List<Organization> experiences) {
         Objects.requireNonNull(experiences, "experiences must not be null");
         this.experiences = experiences;
     }
 
-    public List<Experience> getExperiences() {
+    public List<Organization> getExperiences() {
         return experiences;
     }
 
@@ -26,7 +27,7 @@ public class ExperienceSection extends AbstractSection {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        ExperienceSection that = (ExperienceSection) o;
+        OrganizationSection that = (OrganizationSection) o;
 
         return experiences.equals(that.experiences);
     }

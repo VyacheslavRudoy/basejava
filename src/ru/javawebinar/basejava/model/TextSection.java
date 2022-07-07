@@ -2,11 +2,12 @@ package ru.javawebinar.basejava.model;
 
 import java.util.Objects;
 
-public class SimpleLineSection extends AbstractSection {
+public class TextSection extends Section {
+    private static final long serialVersionUID = 1L;
 
     private final String text;
 
-    public SimpleLineSection(String text) {
+    public TextSection(String text) {
         Objects.requireNonNull(text, "text must not be null");
         this.text = text;
     }
@@ -25,7 +26,7 @@ public class SimpleLineSection extends AbstractSection {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        SimpleLineSection that = (SimpleLineSection) o;
+        TextSection that = (TextSection) o;
 
         return text.equals(that.text);
     }

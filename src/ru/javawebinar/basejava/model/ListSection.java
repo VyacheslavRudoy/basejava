@@ -3,11 +3,12 @@ package ru.javawebinar.basejava.model;
 import java.util.List;
 import java.util.Objects;
 
-public class BulletedLineSection extends AbstractSection {
+public class ListSection extends Section {
+    private static final long serialVersionUID = 1L;
 
     private final List<String> list;
 
-    public BulletedLineSection(List<String> list) {
+    public ListSection(List<String> list) {
         Objects.requireNonNull(list, "list must not be null");
         this.list = list;
     }
@@ -26,7 +27,7 @@ public class BulletedLineSection extends AbstractSection {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        BulletedLineSection that = (BulletedLineSection) o;
+        ListSection that = (ListSection) o;
 
         return list.equals(that.list);
     }

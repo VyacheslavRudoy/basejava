@@ -1,5 +1,6 @@
 package ru.javawebinar.basejava.model;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.ArrayList;
@@ -10,17 +11,19 @@ import java.util.Objects;
 import static ru.javawebinar.basejava.util.DateUtil.NOW;
 import static ru.javawebinar.basejava.util.DateUtil.of;
 
-public class Experience {
+public class Organization implements Serializable {
+    private static final long serialVersionUID = 1L;
+
     private final Link homePage;
 
     private List<Position> positions = new ArrayList<>();
 
-    public Experience(Link homePage, List<Position> positions) {
+    public Organization(Link homePage, List<Position> positions) {
         this.homePage = homePage;
         this.positions = positions;
     }
 
-    public Experience(String name, String url, Position... positions) {
+    public Organization(String name, String url, Position... positions) {
         this.homePage = new Link(name, url);
         this.positions = Arrays.asList(positions);
     }
@@ -30,7 +33,7 @@ public class Experience {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Experience that = (Experience) o;
+        Organization that = (Organization) o;
 
         if (!homePage.equals(that.homePage)) return false;
         return positions.equals(that.positions);
@@ -52,7 +55,8 @@ public class Experience {
     }
 
 
-    public static class Position {
+    public static class Position implements Serializable {
+
         private final LocalDate startDate;
         private final LocalDate finishDate;
         private final String positionName;

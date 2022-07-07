@@ -29,11 +29,11 @@ public class ResumeTestData {
         contacts.put(ContactType.STACKOVERFLOW, "https://stackoverflow.com/users/548473 \n");
         contacts.put(ContactType.HOMEPAGE, "http://gkislin.ru/ \n");
 
-        Map<SectionType, AbstractSection> section = new EnumMap<>(SectionType.class);
-        section.put(SectionType.OBJECTIVE, new SimpleLineSection("Ведущий стажировок и корпоративного" +
+        Map<SectionType, Section> section = new EnumMap<>(SectionType.class);
+        section.put(SectionType.OBJECTIVE, new TextSection("Ведущий стажировок и корпоративного" +
                 " обучения по Java Web и Enterprise технологиям \n"));
 
-        section.put(SectionType.PERSONAL, new SimpleLineSection("Аналитический склад ума, сильная" +
+        section.put(SectionType.PERSONAL, new TextSection("Аналитический склад ума, сильная" +
                 " логика, креативность, инициативность. Пурист кода и архитектуры. \n"));
 
 
@@ -67,7 +67,7 @@ public class ResumeTestData {
         achievements.add("Реализация протоколов по приему платежей всех основных платежных системы России (Cyberplat," +
                 " Eport, Chronopay, Сбербанк), Белоруcсии(Erip, Osmp) и Никарагуа. \n");
 
-        section.put(SectionType.ACHIEVEMENT, new BulletedLineSection(achievements));
+        section.put(SectionType.ACHIEVEMENT, new ListSection(achievements));
 
 
         ArrayList<String> qualification = new ArrayList<>();
@@ -106,22 +106,22 @@ public class ResumeTestData {
 
         qualification.add("Родной русский, английский \"upper intermediate\" \n");
 
-        section.put(SectionType.QUALIFICATIONS, new BulletedLineSection(qualification));
+        section.put(SectionType.QUALIFICATIONS, new ListSection(qualification));
 
 
-        List<Experience> experience = new ArrayList<>();
-        experience.add(new Experience("Java Online Projects", "http://javaops.ru/",
-                new Experience.Position(2013, Month.OCTOBER,
+        List<Organization> experience = new ArrayList<>();
+        experience.add(new Organization("Java Online Projects", "http://javaops.ru/",
+                new Organization.Position(2013, Month.OCTOBER,
                         "Автор проекта.", "Создание, организация проведение Java онлайн " +
                         "проектов и стажировок. \n")));
 
-        experience.add(new Experience("Wrike", "https://www.wrike.com/", new Experience.Position(
+        experience.add(new Organization("Wrike", "https://www.wrike.com/", new Organization.Position(
                 2014, Month.OCTOBER, 2016, Month.JANUARY, "Старший разработчик (backend)",
                 "Проектирование и разработка онлайн платформы управления проектами Wrike " +
                         "(Java 8 API, Maven, Spring, MyBatis, Guava, Vaadin, PostgreSQL, Redis). Двухфакторная " +
                         "аутентификация, авторизация по OAuth1, OAuth2, JWT SSO. \n")));
 
-        experience.add(new Experience("RIT Center", null, new Experience.Position(2012, Month.APRIL,
+        experience.add(new Organization("RIT Center", null, new Organization.Position(2012, Month.APRIL,
                 2014, Month.OCTOBER, "Java архитектор",
                 "Организация процесса разработки системы ERP для разных окружений: релизная политика," +
                         " версионирование, ведение" +
@@ -132,69 +132,69 @@ public class ResumeTestData {
                         "development, Ant, Apache Commons, Spring security, Spring MVC, Tomcat,WSO2, xcmis, OpenCmis," +
                         " Bonita, Python scripting, Unix shell remote scripting via ssh tunnels, PL/Python \n")));
 
-        experience.add(new Experience("Luxoft (Deutsche Bank)", "http://www.luxoft.ru/",
-                new Experience.Position(2010, Month.DECEMBER, 2012, Month.APRIL, "Ведущий программист",
+        experience.add(new Organization("Luxoft (Deutsche Bank)", "http://www.luxoft.ru/",
+                new Organization.Position(2010, Month.DECEMBER, 2012, Month.APRIL, "Ведущий программист",
                         "Участие в проекте Deutsche Bank CRM (WebLogic, Hibernate, Spring, Spring MVC, " +
                                 "SmartGWT, GWT, Jasper, Oracle). Реализация клиентской и серверной части CRM. Реализация " +
                                 "RIA-приложения для администрирования, мониторинга и анализа результатов в области " +
                                 "алгоритмического трейдинга. JPA, Spring, Spring-MVC, GWT, ExtGWT (GXT), Highstock," +
                                 " Commet, HTML5. \n")));
 
-        experience.add(new Experience("Yota", "https://www.yota.ru/",
-                new Experience.Position(2008, Month.JUNE, 2010, Month.DECEMBER, "Ведущий специалист",
+        experience.add(new Organization("Yota", "https://www.yota.ru/",
+                new Organization.Position(2008, Month.JUNE, 2010, Month.DECEMBER, "Ведущий специалист",
                         "Дизайн и " + "имплементация Java EE фреймворка для отдела \"Платежные Системы\"" +
                                 " (GlassFish v2.1, v3, OC4J, EJB3," + " JAX-WS RI 2.1, Servlet 2.4, JSP, JMX, JMS," +
                                 " Maven2). Реализация администрирования, статистики и " + "мониторинга фреймворка. " +
                                 "Разработка online JMX клиента (Python/ Jython, Django, ExtJS) \n")));
 
-        experience.add(new Experience("Enkata", "http://enkata.com/",
-                new Experience.Position(2007, Month.MARCH, 2008, Month.JUNE, "Разработчик ПО",
+        experience.add(new Organization("Enkata", "http://enkata.com/",
+                new Organization.Position(2007, Month.MARCH, 2008, Month.JUNE, "Разработчик ПО",
                         "Реализация клиентской (Eclipse RCP) и серверной (JBoss 4.2, Hibernate 3.0, " +
                                 "Tomcat, JMS) частей кластерного J2EE приложения (OLAP, Data mining). \n")));
 
-        experience.add(new Experience("Siemens AG", "https://www.siemens.com/ru/ru/home.html",
-                new Experience.Position(2005, Month.JANUARY, 2007, Month.FEBRUARY,
+        experience.add(new Organization("Siemens AG", "https://www.siemens.com/ru/ru/home.html",
+                new Organization.Position(2005, Month.JANUARY, 2007, Month.FEBRUARY,
                         "Разработчик ПО", "Разработка информационной модели, проектирование " +
                         "интерфейсов, реализация и отладка ПО на мобильной IN платформе Siemens @vantage (Java, Unix). \n")));
 
-        experience.add(new Experience("Alcatel", "http://www.alcatel.ru/",
-                new Experience.Position(1997, Month.SEPTEMBER, 2005, Month.JANUARY, "Инженер по " +
+        experience.add(new Organization("Alcatel", "http://www.alcatel.ru/",
+                new Organization.Position(1997, Month.SEPTEMBER, 2005, Month.JANUARY, "Инженер по " +
                         "аппаратному и программному тестированию", "Тестирование, отладка, внедрение ПО " +
                         "цифровой телефонной станции Alcatel 1000 S12 (CHILL, ASM). \n")));
 
-        section.put(SectionType.EXPERIENCE, new ExperienceSection(experience));
+        section.put(SectionType.EXPERIENCE, new OrganizationSection(experience));
 
 
-        List<Experience> education = new ArrayList<>();
-        education.add(new Experience("Coursera", "https://www.coursera.org/course/progfun",
-                new Experience.Position(2013, Month.MARCH, 2013, Month.MAY, "'Functional " +
+        List<Organization> education = new ArrayList<>();
+        education.add(new Organization("Coursera", "https://www.coursera.org/course/progfun",
+                new Organization.Position(2013, Month.MARCH, 2013, Month.MAY, "'Functional " +
                         "Programming Principles in Scala' by Martin Odersky", "\n")));
 
-        education.add(new Experience("Luxoft", "http://www.luxoft-training.ru/training/catalog/course.html?ID=22366",
-                new Experience.Position(2011, Month.MARCH, 2011, Month.APRIL,
+        education.add(new Organization("Luxoft", "http://www.luxoft-training.ru/training/catalog/course.html?ID=22366",
+                new Organization.Position(2011, Month.MARCH, 2011, Month.APRIL,
                         "Курс 'Объектно-ориентированный анализ ИС. " +
                                 "Концептуальное моделирование на UML.'", "\n")));
 
-        education.add(new Experience("Siemens AG", "http://www.siemens.ru/",
-                new Experience.Position(2005, Month.JANUARY, 2005, Month.APRIL, "3 месяца " +
+        education.add(new Organization("Siemens AG", "http://www.siemens.ru/",
+                new Organization.Position(2005, Month.JANUARY, 2005, Month.APRIL, "3 месяца " +
                         "обучения мобильным IN сетям (Берлин)", "\n")));
 
-        education.add(new Experience("Alcatel", "http://www.alcatel.ru/",
-                new Experience.Position(1997, Month.SEPTEMBER, 1998, Month.MARCH, "6 месяцев " +
+        education.add(new Organization("Alcatel", "http://www.alcatel.ru/",
+                new Organization.Position(1997, Month.SEPTEMBER, 1998, Month.MARCH, "6 месяцев " +
                         "обучения цифровым телефонным сетям (Москва)", "\n")));
 
-        education.add(new Experience("Санкт-Петербургский национальный исследовательский университет " +
+        education.add(new Organization("Санкт-Петербургский национальный исследовательский университет " +
                 "информационных технологий, механики и оптики", "http://www.ifmo.ru/",
-                new Experience.Position(1993, Month.SEPTEMBER, 1996, Month.JULY, "Аспирантура " +
+                new Organization.Position(1993, Month.SEPTEMBER, 1996, Month.JULY, "Аспирантура " +
                         "(программист С, С++)", "\n"),
-                new Experience.Position(1987, Month.SEPTEMBER, 1993, Month.JULY, "Инженер (программист Fortran, C)",
+                new Organization.Position(1987, Month.SEPTEMBER, 1993, Month.JULY, "Инженер (программист Fortran, C)",
                         "\n")));
 
-        education.add(new Experience("Заочная физико-техническая школа при МФТИ", "http://www.school.mipt.ru/",
-                new Experience.Position(1984, Month.SEPTEMBER, 1987, Month.JUNE, "Закончил" +
+        education.add(new Organization("Заочная физико-техническая школа при МФТИ", "http://www.school.mipt.ru/",
+                new Organization.Position(1984, Month.SEPTEMBER, 1987, Month.JUNE, "Закончил" +
                         " с отличием", "\n")));
 
-        section.put(SectionType.EDUCATION, new ExperienceSection(education));
+        section.put(SectionType.EDUCATION, new OrganizationSection(education));
 
         test.setContacts(contacts);
         test.setSection(section);
