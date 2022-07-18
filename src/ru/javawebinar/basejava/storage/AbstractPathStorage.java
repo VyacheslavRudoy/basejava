@@ -71,11 +71,6 @@ public abstract class AbstractPathStorage extends AbstractStorage<Path> {
 
     @Override
     protected Resume getResume(Path path) {
-        try {
-            return doRead(new BufferedInputStream(new FileInputStream(Path)));
-        } catch (IOException e) {
-            throw new StorageException("Path read error", Path.getName(), e);
-        }
     }
 
     @Override
