@@ -34,10 +34,12 @@ public class MainFile {
 
 
     public static void getAllFiles(File directory) {
+        String count = " -";
         if (!directory.exists()) {
             System.out.println("Такого объекта файловой системы не существует");
         } else if (directory.isFile()) {
-            System.out.println(directory.getName());
+            System.out.println(count + directory.getName());
+
         } else {
             System.out.println(directory.getName());
             File[] files = directory.listFiles();
