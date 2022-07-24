@@ -5,7 +5,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 
 public class MainFile {
-    static String delimeter = "-";
+    static String delimeter = "";
     public static void main(String[] args) {
         String filePath = ".\\.gitignore";
 
@@ -38,15 +38,18 @@ public class MainFile {
         if (!directory.exists()) {
             System.out.println("Такого объекта файловой системы не существует");
         } else if (directory.isFile()) {
-            System.out.println(MainFile.delimeter + directory.getName());
+            System.out.println(MainFile.delimeter + "-" + directory.getName());
         } else {
-            System.out.println(MainFile.delimeter + directory.getName());
+            System.out.println(MainFile.delimeter + "-" + directory.getName());
             File[] files = directory.listFiles();
             if (files != null) {
                 MainFile.delimeter += "-";
                 for (File dirOrFile : files) {
                     getAllFiles(dirOrFile, delimeter);
                 }
+                int startNum = MainFile.delimeter.length() - 1;
+                int finishNum = MainFile.delimeter.length();
+                MainFile.delimeter = MainFile.delimeter.substring(startNum, finishNum);
             }
         }
     }
