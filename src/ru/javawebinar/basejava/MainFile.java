@@ -39,7 +39,6 @@ public class MainFile {
             System.out.println("Такого объекта файловой системы не существует");
         } else if (directory.isFile()) {
             System.out.println(MainFile.delimeter + directory.getName());
-
         } else {
             System.out.println(MainFile.delimeter + directory.getName());
             File[] files = directory.listFiles();
