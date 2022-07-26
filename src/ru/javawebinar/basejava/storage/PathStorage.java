@@ -62,6 +62,7 @@ public class PathStorage extends AbstractStorage<Path> {
         } catch (IOException e) {
             throw new StorageException("Failed to create path: " + path, e);
         }
+        updateResume(r, path);
     }
 
     @Override
