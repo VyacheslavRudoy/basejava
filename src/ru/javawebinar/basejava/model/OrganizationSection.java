@@ -23,6 +23,10 @@ public class OrganizationSection extends Section {
         return experiences;
     }
 
+    public int size() {
+        return experiences.size();
+    }
+
     @Override
     public String toString() {
         return experiences.toString();

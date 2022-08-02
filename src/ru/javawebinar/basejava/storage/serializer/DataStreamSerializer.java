@@ -3,6 +3,7 @@ package ru.javawebinar.basejava.storage.serializer;
 import ru.javawebinar.basejava.model.*;
 
 import java.io.*;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -31,22 +32,46 @@ public class DataStreamSerializer implements StreamSerializer {
                 switch (sectionType) {
                     case OBJECTIVE:
                     case PERSONAL:
-                        dos.writeInt(sectionType.getTitle().length());
                         dos.writeUTF(((TextSection) section).getText());
                         break;
                     case ACHIEVEMENT:
                     case QUALIFICATIONS:
-                        dos.writeInt(sectionType.getTitle().length());
-                        dos.writeUTF((((ListSection) section).getList()).toString());
+                        dos.writeInt(((ListSection) section).size());
+                        for (String element : ((ListSection) section).getList()) {
+                            dos.writeUTF(element);
+                        }
                         break;
                     case EXPERIENCE:
                     case EDUCATION:
-                        dos.writeInt(sectionType.getTitle().length());
-                        dos.writeUTF((((OrganizationSection) section).getExperiences()).toString());
+                        dos.writeInt(((OrganizationSection) section).size());
+                        for (Organization organization : ((OrganizationSection) section).getExperiences()) {
+                            Link homePage = organization.getHomePage();
+                            String nameHomePage = homePage.getName();
+                            String url = homePage.getUrl();
+                            dos.writeUTF(nameHomePage);
+                            dos.writeUTF(url);
+                            List<Organization.Position> positions = organization.getPositions();
+                            dos.writeInt(((Organization.Position) positions).positionsSize());
+                            for (Organization.Position position : positions) {
+                                LocalDate startDate = position.getStartDate();
+                                writeLocalDate(dos, startDate);
+                                LocalDate finishDate = position.getFinishDate();
+                                writeLocalDate(dos, finishDate);
+                                String positionName = position.getPositionName();
+                                dos.writeUTF(positionName);
+                                String additionalInformation = position.getAdditionalInformation();
+                                dos.writeUTF(additionalInformation);
+                            }
+                        }
                         break;
                 }
             }
         }
+    }
+
+    private void writeLocalDate(DataOutputStream dos, LocalDate date) throws IOException {
+        dos.writeInt(date.getYear());
+        dos.writeInt(date.getMonth().getValue());
     }
 
     @Override

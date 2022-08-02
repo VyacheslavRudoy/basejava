@@ -25,6 +25,10 @@ public class ListSection extends Section {
         return list.toString();
     }
 
+    public int size() {
+        return list.size();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

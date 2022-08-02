@@ -22,7 +22,7 @@ public class Organization implements Serializable {
 
     private Link homePage;
 
-    private List<Position> positions = new ArrayList<>();
+    private static List<Position> positions = new ArrayList<>();
 
     public Organization() {
     }
@@ -116,6 +116,10 @@ public class Organization implements Serializable {
 
         public String getAdditionalInformation() {
             return additionalInformation;
+        }
+
+        public int positionsSize() {
+            return Organization.positions.size();
         }
 
         @Override
