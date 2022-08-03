@@ -4,8 +4,9 @@ import ru.javawebinar.basejava.model.*;
 
 import java.io.*;
 import java.time.LocalDate;
+import java.time.Month;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 
@@ -49,9 +50,13 @@ public class DataStreamSerializer implements StreamSerializer {
                             String nameHomePage = homePage.getName();
                             String url = homePage.getUrl();
                             dos.writeUTF(nameHomePage);
-                            dos.writeUTF(url);
+                            if (url == null) {
+                                dos.writeUTF("null");
+                            } else {
+                                dos.writeUTF(url);
+                            }
                             List<Organization.Position> positions = organization.getPositions();
-                            dos.writeInt(((Organization.Position) positions).positionsSize());
+                            dos.writeInt(positions.size());
                             for (Organization.Position position : positions) {
                                 LocalDate startDate = position.getStartDate();
                                 writeLocalDate(dos, startDate);
@@ -60,7 +65,11 @@ public class DataStreamSerializer implements StreamSerializer {
                                 String positionName = position.getPositionName();
                                 dos.writeUTF(positionName);
                                 String additionalInformation = position.getAdditionalInformation();
-                                dos.writeUTF(additionalInformation);
+                                if (additionalInformation == null) {
+                                    dos.writeUTF("null");
+                                } else {
+                                    dos.writeUTF(additionalInformation);
+                                }
                             }
                         }
                         break;
@@ -85,45 +94,82 @@ public class DataStreamSerializer implements StreamSerializer {
                 resume.addContacts(ContactType.valueOf(dis.readUTF()), dis.readUTF());
             }
             int sizeSectionType = dis.readInt();
+            Map<SectionType, Section> section = new EnumMap<>(SectionType.class);
             for (int i = 0; i < sizeSectionType; i++) {
                 SectionType sectionType = SectionType.valueOf(dis.readUTF());
-                Map<SectionType, Section> section = new HashMap<>();
-                int sizeObjective = dis.readInt();
-                for (int a = 0; a < sizeObjective; a++) {
-                    section.put(SectionType.OBJECTIVE, new TextSection(dis.readUTF()));
+                switch (sectionType) {
+                    case OBJECTIVE:
+                        section.put(SectionType.OBJECTIVE, new TextSection(dis.readUTF()));
+                        break;
+                    case PERSONAL:
+                        section.put(SectionType.PERSONAL, new TextSection(dis.readUTF()));
+                        break;
+                    case ACHIEVEMENT:
+                        ArrayList<String> achievements = new ArrayList<>();
+                        readArrayList(dis, achievements);
+                        section.put(SectionType.ACHIEVEMENT, new ListSection(achievements));
+                        break;
+                    case QUALIFICATIONS:
+                        ArrayList<String> qualifications = new ArrayList<>();
+                        readArrayList(dis, qualifications);
+                        section.put(SectionType.QUALIFICATIONS, new ListSection(qualifications));
+                        break;
+                    case EXPERIENCE:
+                        List<Organization> experience = new ArrayList<>();
+                        List<Organization.Position> positionsExperience = new ArrayList<>();
+                        readOrganizationSection(dis, experience, positionsExperience);
+                        section.put(SectionType.EXPERIENCE, new OrganizationSection(experience));
+                        break;
+                    case EDUCATION:
+                        List<Organization> education = new ArrayList<>();
+                        List<Organization.Position> positionsEducation = new ArrayList<>();
+                        readOrganizationSection(dis, education, positionsEducation);
+                        section.put(SectionType.EDUCATION, new OrganizationSection(education));
+                        break;
                 }
-                int sizePersonal = dis.readInt();
-                for (int b = 0; b < sizePersonal; b++) {
-                    section.put(SectionType.PERSONAL, new TextSection(dis.readUTF()));
-                }
-                int sizeAchievement = dis.readInt();
-                for (int c = 0; c < sizeAchievement; c++) {
-                    ArrayList<String> achievements = new ArrayList<>();
-                    achievements.add(dis.readUTF());
-                    section.put(SectionType.ACHIEVEMENT, new ListSection(achievements));
-                }
-                int sizeQualifications = dis.readInt();
-                for (int d = 0; d < sizeQualifications; d++) {
-                    ArrayList<String> qualifications = new ArrayList<>();
-                    qualifications.add(dis.readUTF());
-                    section.put(SectionType.QUALIFICATIONS, new ListSection(qualifications));
-                }
-                int sizeExperience = dis.readInt();
-                for (int e = 0; e < sizeExperience; e++) {
-                    List<String> experience = new ArrayList<>();
-                    experience.add(dis.readUTF());
-                    section.put(SectionType.EXPERIENCE, new ListSection(experience));
-                }
-                int sizeEducation = dis.readInt();
-                for (int f = 0; f < sizeEducation; f++) {
-                    List<String> experience = new ArrayList<>();
-                    experience.add(dis.readUTF());
-                    section.put(SectionType.EXPERIENCE, new ListSection(experience));
-                }
-                resume.setSection(section);
             }
+            resume.setSection(section);
             return resume;
         }
     }
+
+    private void readArrayList(DataInputStream dis, ArrayList<String> list) throws IOException {
+        int size = dis.readInt();
+        for (int i = 0; i < size; i++) {
+            list.add(dis.readUTF());
+        }
+    }
+
+    private int readLocalDate(DataInputStream dis) throws IOException {
+        int year = dis.readInt();
+        Month month = Month.of(dis.readInt());
+        return year;
+    }
+
+    private void readOrganizationSection(DataInputStream dis, List<Organization> experience, List<Organization.Position> positions) throws IOException {
+        int experienceSize = dis.readInt();
+        for (int a = 0; a < experienceSize; a++) {
+            String name = dis.readUTF();
+            String url = dis.readUTF();
+            if (url == "null") {
+                url = null;
+            }
+            int positionSize = dis.readInt();
+            for (int b = 0; b < positionSize; b++) {
+                int startYear = dis.readInt();
+                Month startMonth = Month.of(dis.readInt());
+                int finishYear = dis.readInt();
+                Month finisMonth = Month.of(dis.readInt());
+                String positionName = dis.readUTF();
+                String additionalInformation = dis.readUTF();
+                if (additionalInformation == "null") {
+                    additionalInformation = null;
+                }
+                positions.add(new Organization.Position(startYear, startMonth, finishYear, finisMonth, positionName, additionalInformation));
+            }
+            experience.add(new Organization(name, url, (Organization.Position) positions));
+        }
+    }
 }
+
 
