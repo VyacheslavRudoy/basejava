@@ -26,17 +26,17 @@ public class DataStreamSerializer implements StreamSerializer {
 
             Map<SectionType, Section> sections = r.getSection();
             dos.writeInt(sections.size());
-            for (Map.Entry<SectionType, Section> entry : sections.entrySet()) {
-                SectionType sectionType = entry.getKey();
-                Section section = entry.getValue();
-                dos.writeUTF(sectionType.name());
-                switch (sectionType) {
-                    case OBJECTIVE:
-                    case PERSONAL:
-                        dos.writeUTF(((TextSection) section).getText());
-                        break;
-                    case ACHIEVEMENT:
-                    case QUALIFICATIONS:
+             for (Map.Entry<SectionType, Section> entry : sections.entrySet()) {
+                 SectionType sectionType = entry.getKey();
+                 Section section = entry.getValue();
+                 dos.writeUTF(sectionType.name());
+                 switch (sectionType) {
+                     case OBJECTIVE:
+                     case PERSONAL:
+                         dos.writeUTF(((TextSection) section).getText());
+                         break;
+                     case ACHIEVEMENT:
+                     case QUALIFICATIONS:
                         dos.writeInt(((ListSection) section).size());
                         for (String element : ((ListSection) section).getList()) {
                             dos.writeUTF(element);
@@ -99,32 +99,21 @@ public class DataStreamSerializer implements StreamSerializer {
                 SectionType sectionType = SectionType.valueOf(dis.readUTF());
                 switch (sectionType) {
                     case OBJECTIVE:
-                        section.put(SectionType.OBJECTIVE, new TextSection(dis.readUTF()));
-                        break;
                     case PERSONAL:
-                        section.put(SectionType.PERSONAL, new TextSection(dis.readUTF()));
+                        section.put(sectionType, new TextSection(dis.readUTF()));
                         break;
                     case ACHIEVEMENT:
+                    case QUALIFICATIONS:
                         ArrayList<String> achievements = new ArrayList<>();
                         readArrayList(dis, achievements);
-                        section.put(SectionType.ACHIEVEMENT, new ListSection(achievements));
-                        break;
-                    case QUALIFICATIONS:
-                        ArrayList<String> qualifications = new ArrayList<>();
-                        readArrayList(dis, qualifications);
-                        section.put(SectionType.QUALIFICATIONS, new ListSection(qualifications));
+                        section.put(sectionType, new ListSection(achievements));
                         break;
                     case EXPERIENCE:
-                        List<Organization> experience = new ArrayList<>();
-                        List<Organization.Position> positionsExperience = new ArrayList<>();
-                        readOrganizationSection(dis, experience, positionsExperience);
-                        section.put(SectionType.EXPERIENCE, new OrganizationSection(experience));
-                        break;
                     case EDUCATION:
                         List<Organization> education = new ArrayList<>();
                         List<Organization.Position> positionsEducation = new ArrayList<>();
                         readOrganizationSection(dis, education, positionsEducation);
-                        section.put(SectionType.EDUCATION, new OrganizationSection(education));
+                        section.put(sectionType, new OrganizationSection(education));
                         break;
                 }
             }
@@ -138,12 +127,6 @@ public class DataStreamSerializer implements StreamSerializer {
         for (int i = 0; i < size; i++) {
             list.add(dis.readUTF());
         }
-    }
-
-    private int readLocalDate(DataInputStream dis) throws IOException {
-        int year = dis.readInt();
-        Month month = Month.of(dis.readInt());
-        return year;
     }
 
     private void readOrganizationSection(DataInputStream dis, List<Organization> experience, List<Organization.Position> positions) throws IOException {
