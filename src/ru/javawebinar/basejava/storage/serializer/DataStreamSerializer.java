@@ -110,10 +110,32 @@ public class DataStreamSerializer implements StreamSerializer {
                         break;
                     case EXPERIENCE:
                     case EDUCATION:
-                        List<Organization> education = new ArrayList<>();
-                        List<Organization.Position> positionsEducation = new ArrayList<>();
-                        readOrganizationSection(dis, education, positionsEducation);
-                        section.put(sectionType, new OrganizationSection(education));
+                        List<Organization> organizationList = new ArrayList<>();
+                        List<Organization.Position> positionList = new ArrayList<>();
+                        int experienceSize = dis.readInt();
+                        for (int k = 0; k < experienceSize; k++) {
+                            String name = dis.readUTF();
+                            String url = dis.readUTF();
+                            if (url.equals("null")) {
+                                url = null;
+                            }
+                            Link link = new Link(name, url);
+                            int positionSize = dis.readInt();
+                            for (int o = 0; o < positionSize; o++) {
+                                int startYear = dis.readInt();
+                                Month startMonth = Month.of(dis.readInt());
+                                int finishYear = dis.readInt();
+                                Month finishMonth = Month.of(dis.readInt());
+                                String positionName = dis.readUTF();
+                                String additionalInformation = dis.readUTF();
+                                if (additionalInformation == "null") {
+                                    additionalInformation = null;
+                                }
+                                positionList.add(new Organization.Position(startYear, startMonth, finishYear, finishMonth, positionName, additionalInformation));
+                            }
+                            organizationList.add(new Organization(link, positionList));
+                            section.put(sectionType, new OrganizationSection(organizationList));
+                        }
                         break;
                 }
             }
@@ -126,31 +148,6 @@ public class DataStreamSerializer implements StreamSerializer {
         int size = dis.readInt();
         for (int i = 0; i < size; i++) {
             list.add(dis.readUTF());
-        }
-    }
-
-    private void readOrganizationSection(DataInputStream dis, List<Organization> experience, List<Organization.Position> positions) throws IOException {
-        int experienceSize = dis.readInt();
-        for (int a = 0; a < experienceSize; a++) {
-            String name = dis.readUTF();
-            String url = dis.readUTF();
-            if (url == "null") {
-                url = null;
-            }
-            int positionSize = dis.readInt();
-            for (int b = 0; b < positionSize; b++) {
-                int startYear = dis.readInt();
-                Month startMonth = Month.of(dis.readInt());
-                int finishYear = dis.readInt();
-                Month finisMonth = Month.of(dis.readInt());
-                String positionName = dis.readUTF();
-                String additionalInformation = dis.readUTF();
-                if (additionalInformation == "null") {
-                    additionalInformation = null;
-                }
-                positions.add(new Organization.Position(startYear, startMonth, finishYear, finisMonth, positionName, additionalInformation));
-            }
-            experience.add(new Organization(name, url, (Organization.Position) positions));
         }
     }
 }
