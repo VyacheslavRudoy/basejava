@@ -26,17 +26,17 @@ public class DataStreamSerializer implements StreamSerializer {
 
             Map<SectionType, Section> sections = r.getSection();
             dos.writeInt(sections.size());
-             for (Map.Entry<SectionType, Section> entry : sections.entrySet()) {
-                 SectionType sectionType = entry.getKey();
-                 Section section = entry.getValue();
-                 dos.writeUTF(sectionType.name());
-                 switch (sectionType) {
-                     case OBJECTIVE:
-                     case PERSONAL:
-                         dos.writeUTF(((TextSection) section).getText());
-                         break;
-                     case ACHIEVEMENT:
-                     case QUALIFICATIONS:
+            for (Map.Entry<SectionType, Section> entry : sections.entrySet()) {
+                SectionType sectionType = entry.getKey();
+                Section section = entry.getValue();
+                dos.writeUTF(sectionType.name());
+                switch (sectionType) {
+                    case OBJECTIVE:
+                    case PERSONAL:
+                        dos.writeUTF(((TextSection) section).getText());
+                        break;
+                    case ACHIEVEMENT:
+                    case QUALIFICATIONS:
                         dos.writeInt(((ListSection) section).size());
                         for (String element : ((ListSection) section).getList()) {
                             dos.writeUTF(element);
@@ -114,12 +114,7 @@ public class DataStreamSerializer implements StreamSerializer {
                         List<Organization.Position> positionList = new ArrayList<>();
                         int experienceSize = dis.readInt();
                         for (int k = 0; k < experienceSize; k++) {
-                            String name = dis.readUTF();
-                            String url = dis.readUTF();
-                            if (url.equals("null")) {
-                                url = null;
-                            }
-                            Link link = new Link(name, url);
+                            Link link = readLink(dis);
                             int positionSize = dis.readInt();
                             for (int o = 0; o < positionSize; o++) {
                                 int startYear = dis.readInt();
@@ -127,10 +122,7 @@ public class DataStreamSerializer implements StreamSerializer {
                                 int finishYear = dis.readInt();
                                 Month finishMonth = Month.of(dis.readInt());
                                 String positionName = dis.readUTF();
-                                String additionalInformation = dis.readUTF();
-                                if (additionalInformation == "null") {
-                                    additionalInformation = null;
-                                }
+                                String additionalInformation = readAdditionalInformation(dis);
                                 positionList.add(new Organization.Position(startYear, startMonth, finishYear, finishMonth, positionName, additionalInformation));
                             }
                             organizationList.add(new Organization(link, positionList));
@@ -149,6 +141,24 @@ public class DataStreamSerializer implements StreamSerializer {
         for (int i = 0; i < size; i++) {
             list.add(dis.readUTF());
         }
+    }
+
+    private Link readLink(DataInputStream dis) throws IOException {
+        String name = dis.readUTF();
+        String url = dis.readUTF();
+        if (url.equals("null")) {
+            url = null;
+        }
+        Link link = new Link(name, url);
+        return link;
+    }
+
+    private String readAdditionalInformation(DataInputStream dis) throws IOException {
+        String additionalInformation = dis.readUTF();
+        if (additionalInformation == "null") {
+            additionalInformation = null;
+        }
+        return additionalInformation;
     }
 }
 
