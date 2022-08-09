@@ -5,10 +5,7 @@ import ru.javawebinar.basejava.model.*;
 import java.io.*;
 import java.time.LocalDate;
 import java.time.Month;
-import java.util.ArrayList;
-import java.util.EnumMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class DataStreamSerializer implements StreamSerializer {
 
@@ -18,15 +15,12 @@ public class DataStreamSerializer implements StreamSerializer {
             dos.writeUTF(r.getUuid());
             dos.writeUTF(r.getFullName());
             Map<ContactType, String> contacts = r.getContacts();
-            dos.writeInt(contacts.size());
-            for (Map.Entry<ContactType, String> entry : contacts.entrySet()) {
+            writeWithException(contacts.entrySet(), dos, entry -> {
                 dos.writeUTF(entry.getKey().name());
                 dos.writeUTF(entry.getValue());
-            }
-
+            });
             Map<SectionType, Section> sections = r.getSection();
-            dos.writeInt(sections.size());
-            for (Map.Entry<SectionType, Section> entry : sections.entrySet()) {
+            writeWithException(sections.entrySet(), dos, entry -> {
                 SectionType sectionType = entry.getKey();
                 Section section = entry.getValue();
                 dos.writeUTF(sectionType.name());
@@ -37,15 +31,11 @@ public class DataStreamSerializer implements StreamSerializer {
                         break;
                     case ACHIEVEMENT:
                     case QUALIFICATIONS:
-                        dos.writeInt(((ListSection) section).size());
-                        for (String element : ((ListSection) section).getList()) {
-                            dos.writeUTF(element);
-                        }
+                        writeWithException(((ListSection) section).getList(), dos, dos::writeUTF);
                         break;
                     case EXPERIENCE:
                     case EDUCATION:
-                        dos.writeInt(((OrganizationSection) section).size());
-                        for (Organization organization : ((OrganizationSection) section).getExperiences()) {
+                        writeWithException(((OrganizationSection) section).getExperiences(), dos, organization -> {
                             Link homePage = organization.getHomePage();
                             String nameHomePage = homePage.getName();
                             String url = homePage.getUrl();
@@ -55,9 +45,7 @@ public class DataStreamSerializer implements StreamSerializer {
                             } else {
                                 dos.writeUTF(url);
                             }
-                            List<Organization.Position> positions = organization.getPositions();
-                            dos.writeInt(positions.size());
-                            for (Organization.Position position : positions) {
+                            writeWithException(organization.getPositions(), dos, position -> {
                                 LocalDate startDate = position.getStartDate();
                                 writeLocalDate(dos, startDate);
                                 LocalDate finishDate = position.getFinishDate();
@@ -70,11 +58,22 @@ public class DataStreamSerializer implements StreamSerializer {
                                 } else {
                                     dos.writeUTF(additionalInformation);
                                 }
-                            }
-                        }
+                            });
+                        });
                         break;
                 }
-            }
+            });
+        }
+    }
+
+    private interface ElementWriter<T> {
+        void write(T t) throws IOException;
+    }
+
+    private <T> void writeWithException(Collection<T> collection, DataOutputStream dos, ElementWriter<T> writer) throws IOException {
+        dos.writeInt(collection.size());
+        for (T element : collection) {
+            writer.write(element);
         }
     }
 
