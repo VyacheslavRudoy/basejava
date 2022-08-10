@@ -88,13 +88,9 @@ public class DataStreamSerializer implements StreamSerializer {
             String uuid = dis.readUTF();
             String fullName = dis.readUTF();
             Resume resume = new Resume(uuid, fullName);
-            int sizeContacts = dis.readInt();
-            for (int i = 0; i < sizeContacts; i++) {
-                resume.addContacts(ContactType.valueOf(dis.readUTF()), dis.readUTF());
-            }
-            int sizeSectionType = dis.readInt();
+            readCollection(dis, () -> resume.addContacts(ContactType.valueOf(dis.readUTF()), dis.readUTF()));
             Map<SectionType, Section> section = new EnumMap<>(SectionType.class);
-            for (int i = 0; i < sizeSectionType; i++) {
+            readCollection(dis, () -> {
                 SectionType sectionType = SectionType.valueOf(dis.readUTF());
                 switch (sectionType) {
                     case OBJECTIVE:
@@ -111,11 +107,9 @@ public class DataStreamSerializer implements StreamSerializer {
                     case EDUCATION:
                         List<Organization> organizationList = new ArrayList<>();
                         List<Organization.Position> positionList = new ArrayList<>();
-                        int experienceSize = dis.readInt();
-                        for (int k = 0; k < experienceSize; k++) {
+                        readCollection(dis, () -> {
                             Link link = readLink(dis);
-                            int positionSize = dis.readInt();
-                            for (int o = 0; o < positionSize; o++) {
+                            readCollection(dis, () -> {
                                 int startYear = dis.readInt();
                                 Month startMonth = Month.of(dis.readInt());
                                 int finishYear = dis.readInt();
@@ -123,13 +117,13 @@ public class DataStreamSerializer implements StreamSerializer {
                                 String positionName = dis.readUTF();
                                 String additionalInformation = readAdditionalInformation(dis);
                                 positionList.add(new Organization.Position(startYear, startMonth, finishYear, finishMonth, positionName, additionalInformation));
-                            }
+                            });
                             organizationList.add(new Organization(link, positionList));
                             section.put(sectionType, new OrganizationSection(organizationList));
-                        }
+                        });
                         break;
                 }
-            }
+            });
             resume.setSection(section);
             return resume;
         }
@@ -139,6 +133,17 @@ public class DataStreamSerializer implements StreamSerializer {
         int size = dis.readInt();
         for (int i = 0; i < size; i++) {
             list.add(dis.readUTF());
+        }
+    }
+
+    private interface ElementReader {
+        void collect() throws IOException;
+    }
+
+    private void readCollection(DataInputStream dis, ElementReader reader) throws IOException {
+        int size = dis.readInt();
+        for (int i = 0; i < size; i++) {
+            reader.collect();
         }
     }
 
