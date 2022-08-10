@@ -99,9 +99,7 @@ public class DataStreamSerializer implements StreamSerializer {
                         break;
                     case ACHIEVEMENT:
                     case QUALIFICATIONS:
-                        ArrayList<String> achievements = new ArrayList<>();
-                        readArrayList(dis, achievements);
-                        section.put(sectionType, new ListSection(achievements));
+                        section.put(sectionType, new ListSection(readArrayList(dis, dis::readUTF)));
                         break;
                     case EXPERIENCE:
                     case EDUCATION:
@@ -129,15 +127,21 @@ public class DataStreamSerializer implements StreamSerializer {
         }
     }
 
-    private void readArrayList(DataInputStream dis, ArrayList<String> list) throws IOException {
+    private List<String> readArrayList(DataInputStream dis, ElementList reader) throws IOException {
         int size = dis.readInt();
+        ArrayList<String> list = new ArrayList<>(size);
         for (int i = 0; i < size; i++) {
-            list.add(dis.readUTF());
+            list.add(reader.add());
         }
+        return list;
     }
 
     private interface ElementReader {
         void collect() throws IOException;
+    }
+
+    private interface ElementList {
+        String add() throws IOException;
     }
 
     private void readCollection(DataInputStream dis, ElementReader reader) throws IOException {
