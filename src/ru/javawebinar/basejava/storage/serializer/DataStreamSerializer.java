@@ -105,9 +105,9 @@ public class DataStreamSerializer implements StreamSerializer {
                     case EDUCATION:
                         List<Organization> organizationList = new ArrayList<>();
                         List<Organization.Position> positionList = new ArrayList<>();
-                        readCollection(dis, () -> {
+                        readArrayList(dis, () -> {
                             Link link = readLink(dis);
-                            readCollection(dis, () -> {
+                            readArrayList(dis, () -> {
                                 int startYear = dis.readInt();
                                 Month startMonth = Month.of(dis.readInt());
                                 int finishYear = dis.readInt();
@@ -115,9 +115,11 @@ public class DataStreamSerializer implements StreamSerializer {
                                 String positionName = dis.readUTF();
                                 String additionalInformation = readAdditionalInformation(dis);
                                 positionList.add(new Organization.Position(startYear, startMonth, finishYear, finishMonth, positionName, additionalInformation));
+                                return positionList;
                             });
                             organizationList.add(new Organization(link, positionList));
                             section.put(sectionType, new OrganizationSection(organizationList));
+                            return section;
                         });
                         break;
                 }
@@ -141,7 +143,7 @@ public class DataStreamSerializer implements StreamSerializer {
     }
 
     private interface ElementList <T> {
-        String add() throws IOException;
+        T add() throws IOException;
     }
 
     private void readCollection(DataInputStream dis, ElementReader reader) throws IOException {
