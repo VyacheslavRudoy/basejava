@@ -127,11 +127,11 @@ public class DataStreamSerializer implements StreamSerializer {
         }
     }
 
-    private List<String> readArrayList(DataInputStream dis, ElementList reader) throws IOException {
+    private <T> List<T> readArrayList(DataInputStream dis, ElementList reader) throws IOException {
         int size = dis.readInt();
-        ArrayList<String> list = new ArrayList<>(size);
+        ArrayList<T> list = new ArrayList<>(size);
         for (int i = 0; i < size; i++) {
-            list.add(reader.add());
+            list.add((T) reader.add());
         }
         return list;
     }
@@ -140,7 +140,7 @@ public class DataStreamSerializer implements StreamSerializer {
         void collect() throws IOException;
     }
 
-    private interface ElementList {
+    private interface ElementList <T> {
         String add() throws IOException;
     }
 
