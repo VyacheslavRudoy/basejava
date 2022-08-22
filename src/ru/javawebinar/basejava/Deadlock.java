@@ -8,11 +8,6 @@ public class Deadlock {
         String nameThread1 = "Thread 1";
         String nameThread2 = "Thread 2";
         Deadlock.closingThread(Lock1, Lock2, nameThread1);
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
         Deadlock.closingThread(Lock2, Lock1, nameThread2);
     }
 
@@ -24,7 +19,7 @@ public class Deadlock {
                     System.out.println(nameThread + " : Holding " + nameThread + "...");
 
                     try {
-                        Thread.sleep(900);
+                        Thread.sleep(500);
                     } catch (InterruptedException e) {
                     }
                     System.out.println(nameThread + " : Waiting for lock others thread...");
