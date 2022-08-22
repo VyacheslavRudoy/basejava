@@ -24,7 +24,7 @@ public class Deadlock {
                     System.out.println(nameThread + " : Holding " + nameThread + "...");
 
                     try {
-                        Thread.sleep(500);
+                        Thread.sleep(900);
                     } catch (InterruptedException e) {
                     }
                     System.out.println(nameThread + " : Waiting for lock others thread...");
