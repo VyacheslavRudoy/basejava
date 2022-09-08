@@ -21,10 +21,9 @@ public class Streams {
 
     private static int minValue(Integer[] values) {
         Arrays.sort(values);
-        int result = Stream.of(values)
+        return Stream.of(values)
                 .distinct()
                 .reduce(0, (a, b) -> 10 * a + b);
-        return result;
     }
 
     public static List<Integer> oddOrEven(List<Integer> integers) {
