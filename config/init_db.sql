@@ -2,7 +2,7 @@ create table resume
 (
     uuid      char(36) not null
         primary key,
-    full_name text not null
+    full_name text     not null
 );
 
 alter table resume
