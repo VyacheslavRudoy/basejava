@@ -58,7 +58,7 @@ public class SqlStorage implements Storage {
     public void delete(String uuid) {
         sqlHelper.execute("DELETE FROM resume WHERE uuid = ?", ps -> {
             ps.setString(1, uuid);
-            ps.execute();
+            ps.executeUpdate();
             return null;
         });
     }
