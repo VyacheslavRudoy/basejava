@@ -196,7 +196,7 @@ public class ResumeTestData {
 
         section.put(SectionType.EDUCATION, new OrganizationSection(education));
 
-//        test.setContacts(contacts);
+        test.setContacts(contacts);
 //        test.setSection(section);
 
         return test;
