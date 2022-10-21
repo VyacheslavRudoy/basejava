@@ -40,11 +40,6 @@ public abstract class AbstractStorageTest {
         RESUME_2 = ResumeTestData.resumeCreation(UUID_2, FULL_NAME_2);
         RESUME_3 = ResumeTestData.resumeCreation(UUID_3, FULL_NAME_3);
         RESUME_4 = ResumeTestData.resumeCreation(UUID_4, FULL_NAME_4);
-
-        RESUME_1.addContacts(ContactType.EMAIL, "mail1@ya.ru");
-        RESUME_1.addContacts(ContactType.PHONE_NUMBER, "11111");
-        RESUME_4.addContacts(ContactType.PHONE_NUMBER, "44444");
-        RESUME_4.addContacts(ContactType.SKYPE, "Skype");
     }
 
     protected AbstractStorageTest(Storage storage) {

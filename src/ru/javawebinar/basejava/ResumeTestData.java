@@ -162,7 +162,7 @@ public class ResumeTestData {
                         "аппаратному и программному тестированию", "Тестирование, отладка, внедрение ПО " +
                         "цифровой телефонной станции Alcatel 1000 S12 (CHILL, ASM). \n")));
 
-        section.put(SectionType.EXPERIENCE, new OrganizationSection(experience));
+//        section.put(SectionType.EXPERIENCE, new OrganizationSection(experience));
 
 
         List<Organization> education = new ArrayList<>();
@@ -194,10 +194,10 @@ public class ResumeTestData {
                 new Organization.Position(1984, Month.SEPTEMBER, 1987, Month.JUNE, "Закончил" +
                         " с отличием", "\n")));
 
-        section.put(SectionType.EDUCATION, new OrganizationSection(education));
+//        section.put(SectionType.EDUCATION, new OrganizationSection(education));
 
         test.setContacts(contacts);
-//        test.setSection(section);
+        test.setSection(section);
 
         return test;
     }

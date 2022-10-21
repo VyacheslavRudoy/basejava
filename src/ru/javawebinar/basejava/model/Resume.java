@@ -19,7 +19,7 @@ public class Resume implements Comparable<Resume>, Serializable {
 
     private String fullName;
 
-    private Map<SectionType, Section> section = new EnumMap<>(SectionType.class);
+    private Map<SectionType, Section> sections = new EnumMap<>(SectionType.class);
 
     private Map<ContactType, String> contacts = new EnumMap<>(ContactType.class);
 
@@ -31,6 +31,7 @@ public class Resume implements Comparable<Resume>, Serializable {
         Objects.requireNonNull(uuid, "uuid must not be null");
         Objects.requireNonNull(fullName, "fullName must not be null");
         this.uuid = uuid;
+
         this.fullName = fullName;
     }
 
@@ -38,7 +39,7 @@ public class Resume implements Comparable<Resume>, Serializable {
     }
 
     public void setSection(Map<SectionType, Section> section) {
-        this.section = section;
+        this.sections = section;
     }
 
     public void setContacts(Map<ContactType, String> contacts) {
@@ -54,7 +55,7 @@ public class Resume implements Comparable<Resume>, Serializable {
     }
 
     public Map<SectionType, Section> getSection() {
-        return section;
+        return sections;
     }
 
     public Map<ContactType, String> getContacts() {
@@ -63,6 +64,10 @@ public class Resume implements Comparable<Resume>, Serializable {
 
     public void addContacts(ContactType type, String value) {
         contacts.put(type, value);
+    }
+
+    public void addSection(SectionType type, Section section) {
+        sections.put(type, section);
     }
 
     @Override
@@ -81,11 +86,11 @@ public class Resume implements Comparable<Resume>, Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Resume resume = (Resume) o;
-        return uuid.equals(resume.uuid) && fullName.equals(resume.fullName) && section.equals(resume.section) && contacts.equals(resume.contacts);
+        return uuid.equals(resume.uuid) && fullName.equals(resume.fullName) && sections.equals(resume.sections) && contacts.equals(resume.contacts);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(uuid, fullName, section, contacts);
+        return Objects.hash(uuid, fullName, sections, contacts);
     }
 }
