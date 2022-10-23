@@ -185,19 +185,23 @@ public class SqlStorage implements Storage {
         }
     }
 
-    private void deleteContacts(Connection conn, Resume r) {
-        sqlHelper.execute("DELETE  FROM contact WHERE resume_uuid=?", ps -> {
+    private void deleteContacts(Connection conn, Resume r) throws SQLException {
+        try {
+            PreparedStatement ps = conn.prepareStatement("DELETE  FROM contact WHERE resume_uuid=?");
             ps.setString(1, r.getUuid());
             ps.execute();
-            return null;
-        });
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void deleteSections(Connection conn, Resume r) {
-        sqlHelper.execute("DELETE  FROM section WHERE resume_uuid=?", ps -> {
+        try {
+            PreparedStatement ps = conn.prepareStatement("DELETE  FROM section WHERE resume_uuid=?");
             ps.setString(1, r.getUuid());
             ps.execute();
-            return null;
-        });
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
