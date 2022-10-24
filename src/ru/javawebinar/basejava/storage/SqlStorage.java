@@ -18,6 +18,11 @@ public class SqlStorage implements Storage {
     public final SqlHelper sqlHelper;
 
     public SqlStorage(String dbUrl, String dbUser, String dbPassword) {
+        try {
+            Class.forName("org.postgresql.Driver");
+        } catch (ClassNotFoundException e) {
+            throw new IllegalStateException(e);
+        }
         sqlHelper = new SqlHelper(() -> DriverManager.getConnection(dbUrl, dbUser, dbPassword));
     }
 
@@ -81,16 +86,15 @@ public class SqlStorage implements Storage {
     @Override
     public void save(Resume r) {
         sqlHelper.transactionalExecute(conn -> {
-                    try (PreparedStatement ps = conn.prepareStatement("INSERT INTO resume (uuid, full_name) VALUES (?,?)")) {
-                        ps.setString(1, r.getUuid());
-                        ps.setString(2, r.getFullName());
-                        ps.execute();
-                    }
-                    insertContact(conn, r);
-                    insertSections(conn, r);
-                    return null;
-                }
-        );
+            try (PreparedStatement ps = conn.prepareStatement("INSERT INTO resume (uuid, full_name) VALUES (?,?)")) {
+                ps.setString(1, r.getUuid());
+                ps.setString(2, r.getFullName());
+                ps.execute();
+            }
+            insertContact(conn, r);
+            insertSections(conn, r);
+            return null;
+        });
     }
 
     @Override
@@ -186,22 +190,16 @@ public class SqlStorage implements Storage {
     }
 
     private void deleteContacts(Connection conn, Resume r) throws SQLException {
-        try {
-            PreparedStatement ps = conn.prepareStatement("DELETE  FROM contact WHERE resume_uuid=?");
+        try (PreparedStatement ps = conn.prepareStatement("DELETE  FROM contact WHERE resume_uuid=?")) {
             ps.setString(1, r.getUuid());
             ps.execute();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
         }
     }
 
-    private void deleteSections(Connection conn, Resume r) {
-        try {
-            PreparedStatement ps = conn.prepareStatement("DELETE  FROM section WHERE resume_uuid=?");
+    private void deleteSections(Connection conn, Resume r) throws SQLException {
+        try (PreparedStatement ps = conn.prepareStatement("DELETE  FROM section WHERE resume_uuid=?")) {
             ps.setString(1, r.getUuid());
             ps.execute();
-        } catch (SQLException e) {
-            throw new RuntimeException(e);
         }
     }
 }
