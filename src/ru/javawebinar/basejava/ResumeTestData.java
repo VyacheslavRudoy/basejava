@@ -14,7 +14,7 @@ public class ResumeTestData {
         String testFullName = "fullName";
         Resume test = resumeCreation(testUuid, testFullName);
         System.out.println(test.getContacts());
-        System.out.println(test.getSection());
+        System.out.println(test.getSections());
     }
 
     public static Resume resumeCreation(String uuid, String fullName) {
@@ -196,7 +196,7 @@ public class ResumeTestData {
 
 //        section.put(SectionType.EDUCATION, new OrganizationSection(education));
 
-        test.setContacts(contacts);
+        test.setContact(contacts);
         test.setSection(section);
 
         return test;

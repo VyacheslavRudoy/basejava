@@ -19,7 +19,7 @@ public class DataStreamSerializer implements StreamSerializer {
                 dos.writeUTF(entry.getKey().name());
                 dos.writeUTF(entry.getValue());
             });
-            Map<SectionType, Section> sections = r.getSection();
+            Map<SectionType, Section> sections = r.getSections();
             writeWithException(sections.entrySet(), dos, entry -> {
                 SectionType sectionType = entry.getKey();
                 Section section = entry.getValue();
@@ -88,7 +88,7 @@ public class DataStreamSerializer implements StreamSerializer {
             String uuid = dis.readUTF();
             String fullName = dis.readUTF();
             Resume resume = new Resume(uuid, fullName);
-            readCollection(dis, () -> resume.addContacts(ContactType.valueOf(dis.readUTF()), dis.readUTF()));
+            readCollection(dis, () -> resume.addContact(ContactType.valueOf(dis.readUTF()), dis.readUTF()));
             Map<SectionType, Section> section = new EnumMap<>(SectionType.class);
             readCollection(dis, () -> {
                 SectionType sectionType = SectionType.valueOf(dis.readUTF());
