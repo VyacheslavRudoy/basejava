@@ -46,6 +46,10 @@ public class Resume implements Comparable<Resume>, Serializable {
         this.contacts = contacts;
     }
 
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
     public String getUuid() {
         return uuid;
     }
@@ -57,6 +61,7 @@ public class Resume implements Comparable<Resume>, Serializable {
     public Map<SectionType, Section> getSections() {
         return sections;
     }
+
     public Map<ContactType, String> getContacts() {
         return contacts;
     }
