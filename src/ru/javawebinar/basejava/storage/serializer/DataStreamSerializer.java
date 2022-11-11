@@ -88,7 +88,7 @@ public class DataStreamSerializer implements StreamSerializer {
             String uuid = dis.readUTF();
             String fullName = dis.readUTF();
             Resume resume = new Resume(uuid, fullName);
-            readCollection(dis, () -> resume.addContact(ContactType.valueOf(dis.readUTF()), dis.readUTF()));
+            readCollection(dis, () -> resume.setContact(ContactType.valueOf(dis.readUTF()), dis.readUTF()));
             Map<SectionType, Section> section = new EnumMap<>(SectionType.class);
             readCollection(dis, () -> {
                 SectionType sectionType = SectionType.valueOf(dis.readUTF());
