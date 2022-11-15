@@ -31,7 +31,7 @@
         <hr>
         <c:forEach var="type" items="<%=SectionType.values()%>">
             <c:set var="section" value="${resume.getSection(type)}"/>
-            <jsp:useBean id="section" type="ru.javawebinar.basejava.model.Section" scope="request"/>
+            <jsp:useBean id="section" type="ru.javawebinar.basejava.model.Section"/>
             <h2><a>${type.title}</a></h2>
             <c:choose>
                 <c:when test="${type=='OBJECTIVE'}">

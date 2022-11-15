@@ -47,6 +47,7 @@ public class ResumeServlet extends HttpServlet {
                 r.setContact(type, value);
             }
         }
+
         for (SectionType type : SectionType.values()) {
             String value = request.getParameter(type.name());
             String[] values = request.getParameterValues(type.name());
@@ -56,11 +57,15 @@ public class ResumeServlet extends HttpServlet {
                 switch (type) {
                     case OBJECTIVE:
                     case PERSONAL:
-                        r.setSection(type, new TextSection(value));
+                        if (value != null) {
+                            r.setSection(type, new TextSection(value));
+                        }
                         break;
                     case ACHIEVEMENT:
                     case QUALIFICATIONS:
-                        r.setSection(type, new ListSection(value.split("\\n")));
+                        if (value != null) {
+                            r.setSection(type, new ListSection(value.split("\\n")));
+                        }
                         break;
                     case EDUCATION:
                     case EXPERIENCE:
@@ -83,7 +88,9 @@ public class ResumeServlet extends HttpServlet {
                                 orgs.add(new Organization(new Link(name, urls[i]), positions));
                             }
                         }
-                        r.setSection(type, new OrganizationSection(orgs));
+                        if (orgs.size() > 1) {
+                            r.setSection(type, new OrganizationSection(orgs));
+                        }
                         break;
                 }
             }
