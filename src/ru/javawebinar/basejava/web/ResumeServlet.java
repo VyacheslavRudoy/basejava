@@ -57,15 +57,11 @@ public class ResumeServlet extends HttpServlet {
                 switch (type) {
                     case OBJECTIVE:
                     case PERSONAL:
-                        if (value != null) {
-                            r.setSection(type, new TextSection(value));
-                        }
+                        r.setSection(type, new TextSection(value));
                         break;
                     case ACHIEVEMENT:
                     case QUALIFICATIONS:
-                        if (value != null) {
-                            r.setSection(type, new ListSection(value.split("\\n")));
-                        }
+                        r.setSection(type, new ListSection(value.split("\\n")));
                         break;
                     case EDUCATION:
                     case EXPERIENCE:

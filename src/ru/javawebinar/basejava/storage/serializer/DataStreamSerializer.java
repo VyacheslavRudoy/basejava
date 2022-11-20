@@ -142,7 +142,7 @@ public class DataStreamSerializer implements StreamSerializer {
         void collect() throws IOException;
     }
 
-    private interface ElementList <T> {
+    private interface ElementList<T> {
         T add() throws IOException;
     }
 
