@@ -15,7 +15,7 @@ public class OrganizationSection extends Section {
     }
 
     public OrganizationSection(Organization... experiences) {
-        this((Organization) Arrays.asList(experiences));
+        this.experiences = (Arrays.asList(experiences));
     }
 
     public OrganizationSection(Organization empty) {
