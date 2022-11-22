@@ -76,12 +76,12 @@
                                 <dl>
                                     <dt>Должность:</dt>
                                     <dd><input type="text" name='${type}${counter.index}title' size=75
-                                               value="${pos.title}">
+                                               value="${pos.positionName}">
                                 </dl>
                                 <dl>
                                     <dt>Описание:</dt>
                                     <dd><textarea name="${type}${counter.index}description" rows=5
-                                                  cols=75>${pos.description}</textarea></dd>
+                                                  cols=75>${pos.additionalInformation}</textarea></dd>
                                 </dl>
                             </c:forEach>
                         </div>

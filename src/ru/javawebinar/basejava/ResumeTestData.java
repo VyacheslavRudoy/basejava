@@ -213,12 +213,12 @@ public class ResumeTestData {
 
         List<Organization> experience = new ArrayList<>();
         experience.add(new Organization("", "", new Organization.Position()));
-        section.put(SectionType.EXPERIENCE, new OrganizationSection(experience));
+        section.put(SectionType.EXPERIENCE, new OrganizationSection((Organization) experience));
 
 
         List<Organization> education = new ArrayList<>();
         education.add(new Organization("", "", new Organization.Position()));
-        section.put(SectionType.EDUCATION, new OrganizationSection(education));
+        section.put(SectionType.EDUCATION, new OrganizationSection((Organization) education));
 
         test.setContact(contacts);
         if (section == null) {

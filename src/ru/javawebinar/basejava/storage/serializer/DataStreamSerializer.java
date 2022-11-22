@@ -118,7 +118,7 @@ public class DataStreamSerializer implements StreamSerializer {
                                 return positionList;
                             });
                             organizationList.add(new Organization(link, positionList));
-                            section.put(sectionType, new OrganizationSection(organizationList));
+                            section.put(sectionType, new OrganizationSection((Organization) organizationList));
                             return section;
                         });
                         break;

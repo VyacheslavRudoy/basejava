@@ -23,7 +23,7 @@ public class Organization implements Serializable {
     public static final Organization EMPTY = new Organization("", "", Position.EMPTY);
     private Link homePage;
 
-    private static List<Position> positions = new ArrayList<>();
+    private List<Position> positions = new ArrayList<>();
 
     public Organization() {
     }
@@ -121,9 +121,6 @@ public class Organization implements Serializable {
             return additionalInformation;
         }
 
-        public int positionsSize() {
-            return Organization.positions.size();
-        }
 
         @Override
         public boolean equals(Object o) {

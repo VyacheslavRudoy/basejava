@@ -85,7 +85,7 @@ public class ResumeServlet extends HttpServlet {
                             }
                         }
                         if (orgs.size() > 1) {
-                            r.setSection(type, new OrganizationSection(orgs));
+                            r.setSection(type, new OrganizationSection((Organization) orgs));
                         }
                         break;
                 }
@@ -149,7 +149,7 @@ public class ResumeServlet extends HttpServlet {
                                     emptyFirstOrganizations.add(new Organization(org.getHomePage(), emptyFirstPositions));
                                 }
                             }
-                            section = new OrganizationSection(emptyFirstOrganizations);
+                            section = new OrganizationSection((Organization) emptyFirstOrganizations);
                             break;
                     }
                     r.setSection(type, section);

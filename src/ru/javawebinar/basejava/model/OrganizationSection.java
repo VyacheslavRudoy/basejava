@@ -2,8 +2,8 @@ package ru.javawebinar.basejava.model;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public class OrganizationSection extends Section {
@@ -11,9 +11,11 @@ public class OrganizationSection extends Section {
 
     private List<Organization> experiences;
 
-    public OrganizationSection(List<Organization> experiences) {
-        Objects.requireNonNull(experiences, "experiences must not be null");
-        this.experiences = experiences;
+    public OrganizationSection() {
+    }
+
+    public OrganizationSection(Organization... experiences) {
+        this((Organization) Arrays.asList(experiences));
     }
 
     public OrganizationSection(Organization empty) {
@@ -25,11 +27,6 @@ public class OrganizationSection extends Section {
 
     public int size() {
         return experiences.size();
-    }
-
-    @Override
-    public String toString() {
-        return experiences.toString();
     }
 
     @Override
