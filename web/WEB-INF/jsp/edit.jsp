@@ -45,7 +45,7 @@
                               rows=5><%=String.join("\n", ((ListSection) section).getList())%></textarea>
                 </c:when>
                 <c:when test="${type=='EXPERIENCE' || type=='EDUCATION'}">
-                    <c:forEach var="org" items="<%=((OrganizationSection) section).getExperiences()%>"
+                    <c:forEach var="org" items="<%=((OrganizationSection) section).getOrganizations()%>"
                                varStatus="counter">
                         <dl>
                             <dt>Название учереждения:</dt>

@@ -85,7 +85,7 @@ public class ResumeServlet extends HttpServlet {
                             }
                         }
                         if (orgs.size() > 1) {
-                            r.setSection(type, new OrganizationSection((Organization) orgs));
+                            r.setSection(type, new OrganizationSection(orgs));
                         }
                         break;
                 }
@@ -142,14 +142,14 @@ public class ResumeServlet extends HttpServlet {
                             List<Organization> emptyFirstOrganizations = new ArrayList<>();
                             emptyFirstOrganizations.add(Organization.EMPTY);
                             if (orgSection != null) {
-                                for (Organization org : orgSection.getExperiences()) {
+                                for (Organization org : orgSection.getOrganizations()) {
                                     List<Organization.Position> emptyFirstPositions = new ArrayList<>();
                                     emptyFirstPositions.add(Organization.Position.EMPTY);
                                     emptyFirstPositions.addAll(org.getPositions());
                                     emptyFirstOrganizations.add(new Organization(org.getHomePage(), emptyFirstPositions));
                                 }
                             }
-                            section = new OrganizationSection((Organization) emptyFirstOrganizations);
+                            section = new OrganizationSection(emptyFirstOrganizations);
                             break;
                     }
                     r.setSection(type, section);

@@ -4,29 +4,35 @@ import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 public class OrganizationSection extends Section {
     private static final long serialVersionUID = 1L;
 
-    private List<Organization> experiences;
+    private List<Organization> organizations;
 
     public OrganizationSection() {
     }
 
-    public OrganizationSection(Organization... experiences) {
-        this.experiences = (Arrays.asList(experiences));
+    public OrganizationSection(Organization... organizations) {
+        this(Arrays.asList(organizations));
+    }
+
+    public OrganizationSection(List<Organization> organizations) {
+        Objects.requireNonNull(organizations, "organizations must not be null");
+        this.organizations = organizations;
     }
 
     public OrganizationSection(Organization empty) {
     }
 
-    public List<Organization> getExperiences() {
-        return experiences;
+    public List<Organization> getOrganizations() {
+        return organizations;
     }
 
     public int size() {
-        return experiences.size();
+        return organizations.size();
     }
 
     @Override
@@ -36,11 +42,11 @@ public class OrganizationSection extends Section {
 
         OrganizationSection that = (OrganizationSection) o;
 
-        return experiences.equals(that.experiences);
+        return organizations.equals(that.organizations);
     }
 
     @Override
     public int hashCode() {
-        return experiences.hashCode();
+        return organizations.hashCode();
     }
 }

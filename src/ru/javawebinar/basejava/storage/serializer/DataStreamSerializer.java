@@ -35,7 +35,7 @@ public class DataStreamSerializer implements StreamSerializer {
                         break;
                     case EXPERIENCE:
                     case EDUCATION:
-                        writeWithException(((OrganizationSection) section).getExperiences(), dos, organization -> {
+                        writeWithException(((OrganizationSection) section).getOrganizations(), dos, organization -> {
                             Link homePage = organization.getHomePage();
                             String nameHomePage = homePage.getName();
                             String url = homePage.getUrl();
@@ -118,7 +118,7 @@ public class DataStreamSerializer implements StreamSerializer {
                                 return positionList;
                             });
                             organizationList.add(new Organization(link, positionList));
-                            section.put(sectionType, new OrganizationSection((Organization) organizationList));
+                            section.put(sectionType, new OrganizationSection(organizationList));
                             return section;
                         });
                         break;
