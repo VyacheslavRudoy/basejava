@@ -24,9 +24,6 @@ public class OrganizationSection extends Section {
         this.organizations = organizations;
     }
 
-    public OrganizationSection(Organization empty) {
-    }
-
     public List<Organization> getOrganizations() {
         return organizations;
     }
