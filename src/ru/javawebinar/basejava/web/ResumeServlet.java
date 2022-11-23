@@ -92,9 +92,13 @@ public class ResumeServlet extends HttpServlet {
             }
         }
         if (isCreate) {
-            storage.save(r);
+            if (fullName != "") {
+                storage.save(r);
+            }
         } else {
-            storage.update(r);
+            if (fullName != "") {
+                storage.update(r);
+            }
         }
         response.sendRedirect("resume");
     }
