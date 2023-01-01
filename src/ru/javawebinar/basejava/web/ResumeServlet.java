@@ -94,9 +94,7 @@ public class ResumeServlet extends HttpServlet {
                                 orgs.add(new Organization(new Link(name, urls[i]), positions));
                             }
                         }
-                        if (orgs.size() > 1) {
                             r.setSection(type, new OrganizationSection(orgs));
-                        }
                         break;
                 }
             }

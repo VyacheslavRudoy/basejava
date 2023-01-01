@@ -76,7 +76,7 @@
                                            placeholder="Начало, ММ/ГГГГ"
                                            size=10
                                            value="<%=DateUtil.format(pos.getStartDate())%>">
-                                    <input class="field date date-margin" name="${type}${counter.index}finishDate"
+                                    <input class="field date date-margin" name="${type}${counter.index}endDate"
                                            placeholder="Окончание, ММ/ГГГГ"
                                            size=10
                                            value="<%=DateUtil.format(pos.getFinishDate())%>">

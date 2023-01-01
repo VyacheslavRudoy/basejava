@@ -74,13 +74,13 @@
                                 <div class="period-position">
                                     <div class="period"><%=HtmlUtil.formatDates(position)%>
                                     </div>
-                                    <div class="position">${position.title}</div>
+                                    <div class="position">${position.positionName}</div>
                                 </div>
                                 <c:choose>
-                                    <c:when test="${empty position.description}">
+                                    <c:when test="${empty position.additionalInformation}">
                                     </c:when>
                                     <c:otherwise>
-                                        <div class="description">${position.description}</div>
+                                        <div class="description">${position.additionalInformation}</div>
                                     </c:otherwise>
                                 </c:choose>
                             </c:forEach>
