@@ -20,7 +20,8 @@ following:
         - in XML format (JAXB)
     - in a PostgreSQL relational database
   
-
 - **Installation (deployment) of a web application:**
     - to the servlet container Tomcat
+ 
+- **Screenshot of the home page:**
 ![image](https://github.com/VyacheslavRudoy/basejava/assets/97558285/6c8e8231-916a-47cc-a839-91e45a6b8d07)
