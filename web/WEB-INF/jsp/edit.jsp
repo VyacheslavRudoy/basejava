@@ -79,7 +79,7 @@
                                     <input class="field date date-margin" name="${type}${counter.index}endDate"
                                            placeholder="Окончание, ММ/ГГГГ"
                                            size=10
-                                           value="<%=DateUtil.format(pos.getFinishDate())%>">
+                                           value="<%=DateUtil.format(pos.getEndDate())%>">
                                 </div>
 
                                 <input class="field" type="text" placeholder="Заголовок"

@@ -109,7 +109,7 @@ public class Organization implements Serializable {
             return startDate;
         }
 
-        public LocalDate getFinishDate() {
+        public LocalDate getEndDate() {
             return finishDate;
         }
 
